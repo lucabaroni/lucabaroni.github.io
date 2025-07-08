@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Computational Neuroscience & AI Safety</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #4a4a4a;
+            --accent-color: #0066cc;
+            --background: #ffffff;
+            --surface: #f8f9fa;
+            --border: #e5e7eb;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --max-width: 800px;
+            --particle-color: rgba(0, 102, 204, 0.4);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #ffffff;
+                --secondary-color: #b8b8b8;
+                --accent-color: #a04dff;
+                --background: #0a0a0a;
+                --surface: #1a1a1a;
+                --border: #2a2a2a;
+                --text-primary: #ffffff;
+                --text-secondary: #9ca3af;
+                --particle-color: rgba(77, 166, 255, 0.3);
+            }
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--background);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            margin-bottom: 4rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-family: 'Crimson Text', serif;
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: scaleX(0);
+            }
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            font-family: 'Crimson Text', serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            color: var(--text-primary);
+        }
+
+        h3 {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.75rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .publication {
+            background-color: var(--surface);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .publication::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 102, 204, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .publication:hover::before {
+            left: 100%;
+        }
+
+        .publication:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .publication-title {
+            font-family: 'Crimson Text', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .publication-authors {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-venue {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .publication-links {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .publication-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.35rem 1rem;
+            border: 1px solid var(--accent-color);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+        }
+
+        .publication-links a:hover {
+            background-color: var(--accent-color);
+            color: var(--background);
+            transform: translateY(-1px);
+        }
+
+        .cv-section {
+            margin-bottom: 3rem;
+        }
+
+        .cv-item {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--accent-color);
+            transition: border-color 0.3s ease;
+        }
+
+        .cv-item:hover {
+            border-left-color: var(--text-primary);
+        }
+
+        .cv-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        .cv-title {
+            font-family: 'Crimson Text', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .cv-location {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .blog-post {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .blog-post:hover {
+            padding-left: 1rem;
+        }
+
+        .blog-post:last-child {
+            border-bottom: none;
+        }
+
+        .blog-date {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        .blog-title {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .blog-title:hover {
+            color: var(--accent-color);
+        }
+
+        .blog-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .contact-info {
+            background-color: var(--surface);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .contact-info:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .contact-info a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+            padding-left: 0.5rem;
+        }
+
+        ul {
+            margin-top: 1rem;
+            margin-left: 2rem;
+            color: var(--text-secondary);
+        }
+
+        ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .publication-links {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles-canvas"></canvas>
+    
+    <div class="container">
+        <header>
+            <h1>Luca Baroni</h1>
+            <p class="subtitle">Computational Neuroscience & AI Safety Researcher</p>
+            <nav>
+                <a href="#about" class="nav-link active">About</a>
+                <a href="#publications" class="nav-link">Publications</a>
+                <a href="#cv" class="nav-link">CV</a>
+                <a href="#thoughts" class="nav-link">Thoughts</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+        </header>
+
+        <main>
+            <section id="about" class="section active">
+                <h2>About</h2>
+                <p>Welcome! I'm a computational neuroscience researcher working at the intersection of machine learning, neuroscience, and vision restoration. My PhD research focuses on using deep learning to model neural responses in visual cortex and applying interpretability techniques to uncover computational mechanisms.</p>
+                
+                <p>Through my work, I've identified novel invariance properties in biological neurons and designed stimulation strategies for cortical prostheses that engage visual representation in the brain to restore vision in blind subjects. More recently, driven by a growing interest in AI safety, I participated in the Supervised Program for Alignment Research (SPAR), where I gained practical expertise in mechanistic interpretability of large language models.</p>
+                
+                <p>My research interests include:</p>
+                <ul>
+                    <li>Neural network interpretability and mechanistic understanding</li>
+                    <li>Computational models of visual cortex</li>
+                    <li>Vision restoration through cortical prostheses</li>
+                    <li>AI alignment and safety research</li>
+                    <li>Invariance learning in biological and artificial neural systems</li>
+                </ul>
+            </section>
+
+            <section id="publications" class="section">
+                <h2>Publications</h2>
+                
+                <div class="publication">
+                    <div class="publication-title">Learning and aligning single neuron invariance manifolds in visual neurons</div>
+                    <div class="publication-authors">Bashiri M.*, Baroni L.*, Antolík J., Sinz F. H. (*equal contribution)</div>
+                    <div class="publication-venue">ICLR 2025 (ORAL)</div>
+                    <div class="publication-links">
+                        <a href="#">Paper</a>
+                    </div>
+                </div>
+
+                <div class="publication">
+                    <div class="publication-title">Optogenetic stimulation recruits cortical neurons in a morphology-dependent manner</div>
+                    <div class="publication-authors">Berling D., Baroni L., Chariol A., Gauvain G., Picaud S., Antolík J.</div>
+                    <div class="publication-venue">Journal of Neuroscience, 44(49), 2024</div>
+                    <div class="publication-links">
+                        <a href="#">Paper</a>
+                    </div>
+                </div>
+
+                <div class="publication">
+                    <div class="publication-title">Learning invariance manifolds of visual sensory neurons</div>
+                    <div class="publication-authors">Baroni L.*, Bashiri M.*, Willeke K. F., Antolík J., Sinz F. H.</div>
+                    <div class="publication-venue">NeurIPS Workshop on Symmetry and Geometry in Neural Representations, PMLR, 2023</div>
+                    <div class="publication-links">
+                        <a href="#">Paper</a>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 3rem;">Preprints</h3>
+
+                <div class="publication">
+                    <div class="publication-title">Transformers Don't Need LayerNorm at Inference Time: Scaling LayerNorm Removal to GPT-2 XL and the Implications for Mechanistic Interpretability</div>
+                    <div class="publication-authors">Baroni L*, Khara G*, Schaeffer J*, Subkhankulov M*, Heimersheim S.</div>
+                    <div class="publication-venue">arXiv, 2024</div>
+                    <div class="publication-links">
+                        <a href="#">arXiv</a>
+                    </div>
+                </div>
+
+                <div class="publication">
+                    <div class="publication-title">Pattern completion and disruption characterize contextual modulation in the visual cortex</div>
+                    <div class="publication-authors">Fu J., Shrinivasan S.*, Baroni L.*, et al.</div>
+                    <div class="publication-venue">bioRxiv, 2024</div>
+                    <div class="publication-links">
+                        <a href="#">bioRxiv</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="cv" class="section">
+                <h2>Curriculum Vitae</h2>
+                
+                <div class="cv-section">
+                    <h3>Education</h3>
+                    <div class="cv-item">
+                        <div class="cv-date">2020 - Present</div>
+                        <div class="cv-title">Marie Curie Early Stage Researcher (PhD student)</div>
+                        <div class="cv-location">Charles University, Prague | Supervisor: Jan Antolík</div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-date">2017 - 2020</div>
+                        <div class="cv-title">MSc in Theoretical Physics</div>
+                        <div class="cv-location">University of Milan - Bicocca | Graduated with honors</div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-date">2014 - 2017</div>
+                        <div class="cv-title">BSc in Physics</div>
+                        <div class="cv-location">University of Milan - Bicocca | Graduated with honors</div>
+                    </div>
+                </div>
+
+                <div class="cv-section">
+                    <h3>Research Experience</h3>
+                    <div class="cv-item">
+                        <div class="cv-date">February 2025 - May 2025</div>
+                        <div class="cv-title">SPAR (Supervised Program for Alignment Research)</div>
+                        <div class="cv-location">AI Safety Research | Supervisor: Stefan Heimersheim</div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-date">September 2022 - October 2022</div>
+                        <div class="cv-title">PhD Research Secondment</div>
+                        <div class="cv-location">Femtonics, Budapest</div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-date">March 2022 - June 2022</div>
+                        <div class="cv-title">PhD Research Secondment</div>
+                        <div class="cv-location">Sinz Lab, Göttingen</div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-date">October 2019 - April 2020</div>
+                        <div class="cv-title">Master Thesis Internship</div>
+                        <div class="cv-location">LIPh (Laboratory of Interdisciplinary Physics), Padua</div>
+                    </div>
+                </div>
+
+                <div class="cv-section">
+                    <h3>Selected Talks</h3>
+                    <div class="cv-item">
+                        <div class="cv-date">2025</div>
+                        <div class="cv-title">Learning and aligning single neuron invariance manifolds in visual neurons</div>
+                        <div class="cv-location">ICLR 2025 (Oral Presentation)</div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-date">2023</div>
+                        <div class="cv-title">Learning invariance manifolds of visual sensory neurons</div>
+                        <div class="cv-location">46th Annual Conference of Japanese Neuroscience Society | Selected speaker</div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-date">2022</div>
+                        <div class="cv-title">Invariances in primary visual cortex</div>
+                        <div class="cv-location">Workshop on Physics of Data, Venice | Invited speaker</div>
+                    </div>
+                </div>
+
+                <div class="cv-section">
+                    <h3>Fellowship</h3>
+                    <div class="cv-item">
+                        <div class="cv-title">Marie Skłodowska-Curie Actions ITN Fellowship</div>
+                        <div class="cv-location">enTRAIN Vision</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="thoughts" class="section">
+                <h2>Personal Thoughts</h2>
+                
+                <div class="blog-post">
+                    <div class="blog-date">March 15, 2024</div>
+                    <a href="#" class="blog-title">The Convergence of Neuroscience and AI Safety</a>
+                    <p class="blog-excerpt">Recent advances in understanding neural computation are providing crucial insights for building safer AI systems. In this post, I explore how principles from neuroscience can inform alignment research...</p>
+                </div>
+
+                <div class="blog-post">
+                    <div class="blog-date">February 1, 2024</div>
+                    <a href="#" class="blog-title">Interpretability Through the Lens of Biology</a>
+                    <p class="blog-excerpt">What can we learn about neural network interpretability from biological neural systems? This post examines parallels between neuroscience methods and AI interpretability research...</p>
+                </div>
+
+                <div class="blog-post">
+                    <div class="blog-date">December 10, 2023</div>
+                    <a href="#" class="blog-title">Reflections on My PhD Journey</a>
+                    <p class="blog-excerpt">As I near the completion of my doctoral studies, I wanted to share some thoughts on the research process, challenges faced, and lessons learned along the way...</p>
+                </div>
+            </section>
+
+            <section id="contact" class="section">
+                <h2>Contact</h2>
+                <div class="contact-info">
+                    <p><strong>Email:</strong> <a href="mailto:loocabaroni@gmail.com">loocabaroni@gmail.com</a></p>
+                    <p><strong>Phone:</strong> +39 392 531 9020</p>
+                    <p><strong>Location:</strong> Vienna, Austria</p>
+                    <p><strong>GitHub:</strong> <a href="https://github.com/yourusername">GitHub Profile</a></p>
+                    <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/yourusername">LinkedIn Profile</a></p>
+                    <p><strong>CSNG:</strong> <a href="#">CSNG Profile</a></p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Navigation functionality
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                
+                // Update active nav
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                // Show target section
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === targetId) {
+                        section.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Bird flocking simulation
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let birds = [];
+        const numBirds = 100;
+        let mouseX = 0;
+        let mouseY = 0;
+
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Track mouse position
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Bird class
+        class Bird {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.vy = (Math.random() - 0.5) * 2;
+                this.maxSpeed = 2;
+                this.maxForce = 0.05;
+                this.history = [];
+                this.maxHistory = 20;
+            }
+
+            update() {
+                // Save position history for trail
+                this.history.push({ x: this.x, y: this.y });
+                if (this.history.length > this.maxHistory) {
+                    this.history.shift();
+                }
+
+                // Boid rules: compute steering forces
+                let separation = this.separate(); // steer to avoid crowding
+                let alignment = this.align();     // steer towards average heading
+                let cohesion = this.cohere();     // steer towards center of mass
+                let mouse = this.avoidMouse();    // steer away from mouse
+                let rotation = this.getRotationalForce(); // rotational force around center
+                let centripetal = this.getCentripetalForce(); // force toward center
+
+                // Weights for each behavior
+                const sepWeight = 2;
+                const aliWeight = 1.0;
+                const cohWeight = 1.0;
+                const mouseWeight = 10.0;
+                const rotationWeight = 0.01; // adjust for desired effect
+                const centripetalWeight = 0.02; // adjust for desired effect
+
+                // Sum weighted steering forces
+                let steerX = separation.x * sepWeight + alignment.x * aliWeight + cohesion.x * cohWeight + mouse.x * mouseWeight + rotation.x * rotationWeight + centripetal.x * centripetalWeight;
+                let steerY = separation.y * sepWeight + alignment.y * aliWeight + cohesion.y * cohWeight + mouse.y * mouseWeight + rotation.y * rotationWeight + centripetal.y * centripetalWeight;
+
+                // Limit total steering force
+                let steerMag = Math.hypot(steerX, steerY);
+                if (steerMag > this.maxForce) {
+                    steerX = (steerX / steerMag) * this.maxForce;
+                    steerY = (steerY / steerMag) * this.maxForce;
+                }
+
+                // Apply steering to velocity
+                this.vx += steerX;
+                this.vy += steerY;
+
+                // Limit speed
+                let speed = Math.hypot(this.vx, this.vy);
+                if (speed > this.maxSpeed) {
+                    this.vx = (this.vx / speed) * this.maxSpeed;
+                    this.vy = (this.vy / speed) * this.maxSpeed;
+                }
+
+                // Update position
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Soft boundaries - turn around at edges
+                const margin = 100;
+                if (this.x < margin) this.vx += 0.1;
+                if (this.x > canvas.width - margin) this.vx -= 0.1;
+                if (this.y < margin) this.vy += 0.1;
+                if (this.y > canvas.height - margin) this.vy -= 0.1;
+            }
+
+            align() {
+                let perceptionRadius = 80;
+                let avgVx = 0;
+                let avgVy = 0;
+                let count = 0;
+
+                for (let other of birds) {
+                    let d = Math.hypot(other.x - this.x, other.y - this.y);
+                    if (other !== this && d < perceptionRadius) {
+                        avgVx += other.vx;
+                        avgVy += other.vy;
+                        count++;
+                    }
+                }
+
+                if (count > 0) {
+                    avgVx /= count;
+                    avgVy /= count;
+                    avgVx -= this.vx;
+                    avgVy -= this.vy;
+                    let mag = Math.hypot(avgVx, avgVy);
+                    if (mag > this.maxForce) {
+                        avgVx = (avgVx / mag) * this.maxForce;
+                        avgVy = (avgVy / mag) * this.maxForce;
+                    }
+                }
+
+                return { x: avgVx, y: avgVy };
+            }
+
+            cohere() {
+                let perceptionRadius = 80;
+                let avgX = 0;
+                let avgY = 0;
+                let count = 0;
+
+                for (let other of birds) {
+                    let d = Math.hypot(other.x - this.x, other.y - this.y);
+                    if (other !== this && d < perceptionRadius) {
+                        avgX += other.x;
+                        avgY += other.y;
+                        count++;
+                    }
+                }
+
+                if (count > 0) {
+                    avgX /= count;
+                    avgY /= count;
+                    avgX -= this.x;
+                    avgY -= this.y;
+                    let mag = Math.hypot(avgX, avgY);
+                    if (mag > this.maxForce) {
+                        avgX = (avgX / mag) * this.maxForce;
+                        avgY = (avgY / mag) * this.maxForce;
+                    }
+                }
+
+                return { x: avgX, y: avgY };
+            }
+
+            separate() {
+                let perceptionRadius = 40;
+                let avgX = 0;
+                let avgY = 0;
+                let count = 0;
+
+                for (let other of birds) {
+                    let d = Math.hypot(other.x - this.x, other.y - this.y);
+                    if (other !== this && d < perceptionRadius && d > 0) {
+                        let diffX = this.x - other.x;
+                        let diffY = this.y - other.y;
+                        diffX /= d;
+                        diffY /= d;
+                        avgX += diffX;
+                        avgY += diffY;
+                        count++;
+                    }
+                }
+
+                if (count > 0) {
+                    avgX /= count;
+                    avgY /= count;
+                    let mag = Math.hypot(avgX, avgY);
+                    if (mag > this.maxForce) {
+                        avgX = (avgX / mag) * this.maxForce;
+                        avgY = (avgY / mag) * this.maxForce;
+                    }
+                }
+
+                return { x: avgX, y: avgY };
+            }
+
+            avoidMouse() {
+                let dx = this.x - mouseX;
+                let dy = this.y - mouseY;
+                let d = Math.hypot(dx, dy);
+                if (d < 100 && d > 0) {
+                    dx /= d;
+                    dy /= d;
+                    return { x: dx * 0.1, y: dy * 0.1 };
+                }
+                return { x: 0, y: 0 };
+            }
+
+            getRotationalForce() {
+                // Calculate a force perpendicular to the vector from center to bird (for counterclockwise rotation)
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                let dx = this.x - centerX;
+                let dy = this.y - centerY;
+                // Perpendicular vector (for 2D: (dx, dy) -> (-dy, dx) for CCW)
+                let perpX = -dy;
+                let perpY = dx;
+                // Normalize
+                let mag = Math.hypot(perpX, perpY);
+                if (mag > 0) {
+                    perpX /= mag;
+                    perpY /= mag;
+                }
+                // Scale by distance from center (optional: could be constant)
+                return { x: perpX, y: perpY };
+            }
+
+            getCentripetalForce() {
+                // Vector from bird to center
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                let dx = centerX - this.x;
+                let dy = centerY - this.y;
+                // Normalize
+                let mag = Math.hypot(dx, dy);
+                if (mag > 0) {
+                    dx /= mag;
+                    dy /= mag;
+                }
+                return { x: dx, y: dy };
+            }
+
+            draw() {
+                // Draw bird as a small triangle pointing in direction of movement
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(Math.atan2(this.vy, this.vx));
+                
+                ctx.beginPath();
+                ctx.moveTo(6, 0);
+                ctx.lineTo(-3, -2);
+                ctx.lineTo(-3, 2);
+                ctx.closePath();
+                
+                ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--particle-color');
+                ctx.fill();
+                
+                ctx.restore();
+
+                // Draw trail
+                if (this.history.length > 1) {
+                    ctx.beginPath();
+                    ctx.moveTo(this.history[0].x, this.history[0].y);
+                    
+                    for (let i = 1; i < this.history.length; i++) {
+                        ctx.lineTo(this.history[i].x, this.history[i].y);
+                    }
+                    
+                    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--particle-color');
+                    ctx.lineWidth = 0.5;
+                    ctx.globalAlpha = 0.2;
+                    ctx.stroke();
+                    ctx.globalAlpha = 1;
+                }
+            }
+        }
+
+        // Initialize birds
+        for (let i = 0; i < numBirds; i++) {
+            birds.push(new Bird());
+        }
+
+        // Animation loop
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let bird of birds) {
+                bird.update();
+                bird.draw();
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
