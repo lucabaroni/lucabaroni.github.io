@@ -24,20 +24,21 @@
             --text-primary: #1a1a1a;
             --text-secondary: #6b7280;
             --max-width: 800px;
-            --particle-color: rgba(0, 102, 204, 0.4);
+            /* --particle-color: rgba(0, 102, 204, 0.4); */
+            --particle-color: rgba(0, 0, 0, 1)
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --primary-color: #ffffff;
-                --secondary-color: #b8b8b8;
-                --accent-color: #a04dff;
-                --background: #0a0a0a;
+            --primary-color: #ffffff;
+            --secondary-color: #b8b8b8;
+            --accent-color: #a04dff;
+            --background: #0a0a0a;
                 --surface: #1a1a1a;
-                --border: #2a2a2a;
-                --text-primary: #ffffff;
-                --text-secondary: #9ca3af;
-                --particle-color: rgba(77, 166, 255, 0.3);
+            --border: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --particle-color: rgba(77, 166, 255, 0.3);
             }
         }
 
@@ -65,7 +66,7 @@
         .container {
             max-width: var(--max-width);
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1.2rem 1.2rem 0.5rem 1.2rem;
             position: relative;
             z-index: 1;
             background: var(--background);
@@ -74,16 +75,16 @@
         }
 
         header {
-            margin-bottom: 4rem;
-            padding-bottom: 2rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.5rem;
             border-bottom: 1px solid var(--border);
         }
 
         h1 {
             font-family: 'Crimson Text', serif;
-            font-size: 3rem;
+            font-size: 2.3rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
             letter-spacing: -0.02em;
             background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-color) 100%);
             -webkit-background-clip: text;
@@ -93,17 +94,17 @@
 
         .subtitle {
             font-family: 'Crimson Text', serif;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             font-weight: 300;
             letter-spacing: 0.02em;
         }
 
         nav {
             display: flex;
-            gap: 2rem;
-            margin-top: 2rem;
+            gap: 1.2rem;
+            margin-top: 1.2rem;
         }
 
         nav a {
@@ -144,6 +145,7 @@
         .section {
             display: none;
             animation: fadeIn 0.4s ease;
+            margin-bottom: 0.7rem;
         }
 
         .section.active {
@@ -163,18 +165,18 @@
 
         h2 {
             font-family: 'Crimson Text', serif;
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            font-weight: 400;
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
             color: var(--text-primary);
         }
 
         h3 {
             font-family: 'Crimson Text', serif;
-            font-size: 1.75rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 1.2rem;
+            margin-bottom: 0.7rem;
+            font-weight: 700;
         }
 
         p {
@@ -184,8 +186,8 @@
 
         .publication {
             background-color: var(--surface);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            padding: 0.7rem 1.3rem 0.5rem 1rem;
+            margin-bottom: 0.4rem;
             border-radius: 12px;
             border: 1px solid var(--border);
             transition: all 0.3s ease;
@@ -211,6 +213,15 @@
         .publication:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .publication[onclick] {
+            cursor: pointer;
+        }
+
+        .publication[onclick]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
         }
 
         .publication-title {
@@ -260,12 +271,12 @@
         }
 
         .cv-section {
-            margin-bottom: 3rem;
+            margin-bottom: 0.7rem;
         }
 
         .cv-item {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
+            margin-bottom: 0.4rem;
+            padding-left: 1rem;
             border-left: 3px solid var(--accent-color);
             transition: border-color 0.3s ease;
         }
@@ -296,9 +307,9 @@
 
         .profile-section {
             display: flex;
-            gap: 2rem;
+            gap: 1.2rem;
             align-items: flex-start;
-            margin-bottom: 2rem;
+            margin-bottom: 0.7rem;
         }
 
         .profile-image {
@@ -341,8 +352,8 @@
         }
 
         .blog-post {
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.6rem;
             border-bottom: 1px solid var(--border);
             transition: all 0.3s ease;
         }
@@ -387,15 +398,16 @@
 
         .contact-info {
             background-color: var(--surface);
-            padding: 2rem;
+            padding: 1.2rem 1.2rem 0.6rem 1.2rem;
             border-radius: 12px;
             border: 1px solid var(--border);
             transition: all 0.3s ease;
+            padding-bottom: 0.6rem;
         }
 
         .contact-section {
             display: flex;
-            gap: 2rem;
+            gap: 1.2rem;
             align-items: center;
         }
 
@@ -468,46 +480,68 @@
 
         @media (max-width: 768px) {
             .container {
-                padding: 1rem;
+                padding: 0.7rem 0.7rem 0.3rem 0.7rem;
             }
-
+            header {
+                margin-bottom: 0.7rem;
+                padding-bottom: 0.3rem;
+            }
+            .section {
+                margin-bottom: 0.3rem;
+            }
+            .publication {
+                margin-bottom: 0.2rem;
+                padding-bottom: 0.2rem;
+            }
+            .cv-section {
+                margin-bottom: 0.3rem;
+            }
+            .cv-item {
+                margin-bottom: 0.2rem;
+            }
+            .blog-post {
+                margin-bottom: 0.3rem;
+                padding-bottom: 0.3rem;
+            }
+            .contact-info {
+                padding-bottom: 0.3rem;
+            }
+            .profile-section {
+                margin-bottom: 0.3rem;
+            }
             h1 {
-                font-size: 2.5rem;
+                font-size: 1.5rem;
             }
-
             h2 {
-                font-size: 2rem;
+                font-size: 1.2rem;
             }
-
             nav {
-                flex-wrap: wrap;
-                gap: 1rem;
+                gap: 0.7rem;
             }
-
             .publication-links {
                 flex-wrap: wrap;
             }
-
-            .profile-section {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            
             .profile-image {
-                width: 120px;
-                height: 120px;
-            }
-
-            .contact-section {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .contact-image {
                 width: 100px;
                 height: 100px;
             }
+            .contact-section {
+                gap: 0.7rem;
+            }
+        }
+
+        .publication-venue-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+        }
+        .publication-equal-note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 0;
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -538,8 +572,8 @@
                     </div>
                     <div class="profile-content">
                         <p>I'm a computational neuroscience researcher working at the intersection of machine learning, neuroscience, and vision restoration. My PhD research focuses on using deep learning to model neural responses in visual cortex and applying interpretability techniques to uncover computational mechanisms.</p>
-                        
-                        <p>Through my work, I've identified novel invariance properties in biological neurons and designed stimulation strategies for cortical prostheses that engage visual representation in the brain to restore vision in blind subjects. More recently, driven by a growing interest in AI safety, I participated in the Supervised Program for Alignment Research (SPAR), where I gained practical expertise in mechanistic interpretability of large language models.</p>
+                
+                <p>Through my work, I've identified novel invariance properties in biological neurons and designed stimulation strategies for cortical prostheses that engage visual representation in the brain to restore vision in blind subjects. More recently, driven by a growing interest in AI safety, I participated in the Supervised Program for Alignment Research (SPAR), where I gained practical expertise in mechanistic interpretability of large language models.</p>
                     </div>
                 </div>
                 
@@ -556,55 +590,10 @@
             <section id="publications" class="section">
                 <h2>Publications</h2>
                 
-                <div class="publication">
-                    <div class="publication-title">Learning and aligning single neuron invariance manifolds in visual neurons</div>
-                    <div class="publication-authors">Bashiri M.*, Baroni L.*, Antolík J., Sinz F. H.</div>
-                    <div class="publication-venue">ICLR 2025 (ORAL)</div>
-                    <div class="publication-links">
-                        <a href="#">Paper</a>
+                                <div id="publications-list">
+                    <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+                        Loading publications...
                     </div>
-                </div>
-
-                <div class="publication">
-                    <div class="publication-title">Optogenetic stimulation recruits cortical neurons in a morphology-dependent manner</div>
-                    <div class="publication-authors">Berling D., Baroni L., Chariol A., Gauvain G., Picaud S., Antolík J.</div>
-                    <div class="publication-venue">Journal of Neuroscience, 44(49), 2024</div>
-                    <div class="publication-links">
-                        <a href="#">Paper</a>
-                    </div>
-                </div>
-
-                <div class="publication">
-                    <div class="publication-title">Learning invariance manifolds of visual sensory neurons</div>
-                    <div class="publication-authors">Baroni L.*, Bashiri M.*, Willeke K. F., Antolík J., Sinz F. H.</div>
-                    <div class="publication-venue">NeurIPS Workshop on Symmetry and Geometry in Neural Representations, PMLR, 2023</div>
-                    <div class="publication-links">
-                        <a href="#">Paper</a>
-                    </div>
-                </div>
-
-                <h3 style="margin-top: 3rem;">Preprints</h3>
-
-                <div class="publication">
-                    <div class="publication-title">Transformers Don't Need LayerNorm at Inference Time: Scaling LayerNorm Removal to GPT-2 XL and the Implications for Mechanistic Interpretability</div>
-                    <div class="publication-authors">Baroni L*, Khara G*, Schaeffer J*, Subkhankulov M*, Heimersheim S.</div>
-                    <div class="publication-venue">arXiv, 2024</div>
-                    <div class="publication-links">
-                        <a href="#">arXiv</a>
-                    </div>
-                </div>
-
-                <div class="publication">
-                    <div class="publication-title">Pattern completion and disruption characterize contextual modulation in the visual cortex</div>
-                    <div class="publication-authors">Fu J., Shrinivasan S.*, Baroni L.*, et al.</div>
-                    <div class="publication-venue">bioRxiv, 2024</div>
-                    <div class="publication-links">
-                        <a href="#">bioRxiv</a>
-                    </div>
-                </div>
-                
-                <div style="text-align: right; margin-top: 2rem; font-size: 0.85rem; color: var(--text-secondary); font-style: italic;">
-                    *denotes equal contribution
                 </div>
             </section>
 
@@ -705,7 +694,7 @@
             </section> -->
 
             <section id="contact" class="section">
-                <h2>Contact</h2>
+                <!-- <h2>Contact</h2> -->
                 <div class="contact-info">
                     <div class="contact-section">
                         <div class="contact-image">
@@ -714,12 +703,12 @@
                             <div class="contact-placeholder" style="display:none;">LB</div>
                         </div>
                         <div class="contact-details">
-                            <p><strong>Email:</strong> <a href="mailto:loocabaroni@gmail.com">loocabaroni@gmail.com</a></p>
-                            <p><strong>Phone:</strong> +39 392 531 9020</p>
-                            <p><strong>Location:</strong> Vienna, Austria</p>
-                            <p><strong>GitHub:</strong> <a href="https://github.com/yourusername">GitHub Profile</a></p>
-                            <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/yourusername">LinkedIn Profile</a></p>
-                            <p><strong>CSNG:</strong> <a href="#">CSNG Profile</a></p> 
+                    <p><strong>Email:</strong> <a href="mailto:loocabaroni@gmail.com">loocabaroni@gmail.com</a></p>
+                    <p><strong>Phone:</strong> +39 392 531 9020</p>
+                    <p><strong>Location:</strong> Vienna, Austria</p>
+                    <p><strong>GitHub:</strong> <a href="https://github.com/yourusername">GitHub Profile</a></p>
+                    <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/yourusername">LinkedIn Profile</a></p>
+                    <p><strong>CSNG:</strong> <a href="#">CSNG Profile</a></p>
                             <!-- <a href="https://github.com/yourusername">GitHub</a></p>  <a href="https://linkedin.com/in/yourusername">LinkedIn</a></p> -->
                         </div>
                     </div>
@@ -1035,6 +1024,331 @@
         }
 
         animate();
+
+        // Load and parse publications from BibTeX file
+        async function loadPublications() {
+            try {
+                const response = await fetch('publications.bib');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                const bibText = await response.text();
+                console.log('BibTeX content:', bibText);
+                const publications = parseBibTeX(bibText);
+                renderPublications(publications);
+            } catch (error) {
+                console.error('Error loading publications:', error);
+                document.getElementById('publications-list').innerHTML = 
+                    `<div style="text-align: center; color: var(--text-secondary); padding: 2rem;">Unable to load publications: ${error.message}</div>`;
+            }
+        }
+
+        // Simple BibTeX parser
+        function parseBibTeX(bibText) {
+            const entries = [];
+            const entryRegex = /@(\w+)\s*\{\s*([^,\s]+)\s*,?\s*([\s\S]*?)(?=\n@|\n\s*$|$)/g;
+            
+            let match;
+            while ((match = entryRegex.exec(bibText)) !== null) {
+                const [, type, key, content] = match;
+                const entry = { type: type.toLowerCase(), key: key.trim() };
+                
+                // Parse fields - handle both {value} and value formats
+                const fieldRegex = /(\w+)\s*=\s*(\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}|([^,\n}]+))/g;
+                let fieldMatch;
+                while ((fieldMatch = fieldRegex.exec(content)) !== null) {
+                    const [, fieldName, , bracedValue, unbracedValue] = fieldMatch;
+                    let fieldValue = (bracedValue !== undefined ? bracedValue : unbracedValue);
+                    if (fieldValue) {
+                        fieldValue = fieldValue.trim();
+                        // Remove trailing commas
+                        fieldValue = fieldValue.replace(/,$/, '');
+                        entry[fieldName.toLowerCase()] = fieldValue;
+                    }
+                }
+                
+                entries.push(entry);
+            }
+            
+            return entries;
+        }
+
+        // Render publications
+        function renderPublications(publications) {
+            const container = document.getElementById('publications-list');
+            
+            // Separate published papers and preprints
+            const published = [];
+            const preprints = [];
+            
+            publications.forEach(pub => {
+                const isPreprint = pub.journal?.toLowerCase().includes('arxiv') || 
+                                 pub.journal?.toLowerCase().includes('biorxiv') ||
+                                 (pub.eprint && (pub.archiveprefix?.toLowerCase() === 'arxiv' || pub.archivePrefix?.toLowerCase() === 'arxiv'));
+                
+                if (isPreprint) {
+                    preprints.push(pub);
+                } else {
+                    published.push(pub);
+                }
+            });
+            
+            let html = '';
+            
+            // Render published papers
+            published.forEach(pub => {
+                html += renderPublication(pub);
+            });
+            
+            // Add preprints section if any exist
+            if (preprints.length > 0) {
+                html += '<h3 style="margin-top: 3rem;">Preprints</h3>';
+                preprints.forEach(pub => {
+                    html += renderPublication(pub);
+                });
+            }
+            
+            container.innerHTML = html;
+        }
+
+        // Convert LaTeX accents to Unicode
+        function convertLatexAccents(text) {
+            let result = text;
+            
+            // Handle the format {\'\i}k -> ík (accent command followed by letter)
+            const accentPatterns = [
+                // Acute accents
+                [/\{\\'([aeiouynslzcAEIOUYNSLZC])\}/g, (match, letter) => {
+                    const map = {'a':'á','e':'é','i':'í','o':'ó','u':'ú','y':'ý','n':'ń','s':'ś','l':'ĺ','z':'ź','c':'ć',
+                                'A':'Á','E':'É','I':'Í','O':'Ó','U':'Ú','Y':'Ý','N':'Ń','S':'Ś','L':'Ĺ','Z':'Ź','C':'Ć'};
+                    return map[letter] || letter;
+                }],
+                // Handle \i specifically (dotless i)
+                [/\{\\'\\i\}/g, 'í'],
+                [/\{\\'\\I\}/g, 'Í'],
+                
+                // Grave accents
+                [/\{\\`([aeiouAEIOU])\}/g, (match, letter) => {
+                    const map = {'a':'à','e':'è','i':'ì','o':'ò','u':'ù','A':'À','E':'È','I':'Ì','O':'Ò','U':'Ù'};
+                    return map[letter] || letter;
+                }],
+                
+                // Circumflex
+                [/\{\\\^([aeiouAEIOU])\}/g, (match, letter) => {
+                    const map = {'a':'â','e':'ê','i':'î','o':'ô','u':'û','A':'Â','E':'Ê','I':'Î','O':'Ô','U':'Û'};
+                    return map[letter] || letter;
+                }],
+                
+                // Umlaut/diaeresis
+                [/\{\\\"([aeiouAEIOU])\}/g, (match, letter) => {
+                    const map = {'a':'ä','e':'ë','i':'ï','o':'ö','u':'ü','A':'Ä','E':'Ë','I':'Ï','O':'Ö','U':'Ü'};
+                    return map[letter] || letter;
+                }],
+                
+                // Tilde
+                [/\{\\~([anoANO])\}/g, (match, letter) => {
+                    const map = {'a':'ã','n':'ñ','o':'õ','A':'Ã','N':'Ñ','O':'Õ'};
+                    return map[letter] || letter;
+                }],
+                
+                // Cedilla
+                [/\{\\c\{([cC])\}\}/g, (match, letter) => letter === 'c' ? 'ç' : 'Ç'],
+                
+                // Special cases
+                [/\{\\aa\}/g, 'å'],
+                [/\{\\AA\}/g, 'Å'],
+                [/\{\\o\}/g, 'ø'],
+                [/\{\\O\}/g, 'Ø'],
+                [/\{\\ae\}/g, 'æ'],
+                [/\{\\AE\}/g, 'Æ'],
+                [/\{\\oe\}/g, 'œ'],
+                [/\{\\OE\}/g, 'Œ'],
+                [/\{\\ss\}/g, 'ß'],
+                [/\{\\l\}/g, 'ł'],
+                [/\{\\L\}/g, 'Ł']
+            ];
+            
+            for (const [pattern, replacement] of accentPatterns) {
+                result = result.replace(pattern, replacement);
+            }
+            
+            return result;
+        }
+
+        // Normalize author name format to "First Last"
+        function normalizeAuthorName(author) {
+            author = author.trim();
+            
+            // Check if it's in "Last, First" format
+            if (author.includes(',')) {
+                const parts = author.split(',').map(part => part.trim());
+                if (parts.length === 2) {
+                    // Convert "Last, First" to "First Last"
+                    return `${parts[1]} ${parts[0]}`;
+                }
+            }
+            
+            // Already in "First Last" format or single name
+            return author;
+        }
+
+        // Format author list with commas
+        function formatAuthors(authorString) {
+            // Split authors by " and " and rejoin with commas
+            let authors = authorString.split(' and ');
+            
+            // Clean up and normalize each author name
+            authors = authors.map(author => normalizeAuthorName(author));
+            
+            // Join with commas, using "and" before the last author if more than 2 authors
+            if (authors.length === 1) {
+                return authors[0];
+            } else if (authors.length === 2) {
+                return authors.join(' and ');
+            } else {
+                const lastAuthor = authors.pop();
+                return authors.join(', ') + ', and ' + lastAuthor;
+            }
+        }
+
+        // Parse equal contribution info from note field
+        function getEqualContributors(noteField) {
+            if (!noteField) return [];
+            
+            // Look for patterns like "equal-contribution: Author1, Author2" or "equal contribution: Author1 and Author2"
+            const equalContribRegex = /equal[- ]contribution:\s*([^;.]+)/i;
+            const match = noteField.match(equalContribRegex);
+            
+            if (match) {
+                // Split by "and" or commas and clean up
+                return match[1]
+                    .split(/\s+and\s+|,/)
+                    .map(name => name.trim())
+                    .filter(name => name.length > 0);
+            }
+            
+            return [];
+        }
+
+        // Add asterisks to equal contributors
+        function markEqualContributors(authorString, equalContributors) {
+            if (equalContributors.length === 0) return authorString;
+            
+            let result = authorString;
+            equalContributors.forEach(contributor => {
+                // Create regex that matches the contributor name
+                const escapedName = contributor.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`\\b${escapedName}\\b`, 'gi');
+                result = result.replace(regex, `${contributor}*`);
+            });
+            
+            return result;
+        }
+
+        // Make your name bold in author lists
+        function boldMyName(authorString) {
+            // Handle various formats of your name
+            const nameVariations = [
+                'Luca Baroni',
+                'L. Baroni',
+                'Baroni, L.',
+                'Baroni, Luca',
+                'Baroni L.',
+                'Baroni L'
+            ];
+            
+            let result = authorString;
+            nameVariations.forEach(name => {
+                // Create regex that matches the name with word boundaries - handle asterisks
+                const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`\\b${escapedName}(\\*?)\\b`, 'gi');
+                result = result.replace(regex, `<span style="font-weight: 900;">${name}$1</span>`);
+            });
+            
+            return result;
+        }
+
+        // Render individual publication
+        function renderPublication(pub) {
+            const title = convertLatexAccents(pub.title || 'Untitled');
+            const rawAuthors = convertLatexAccents(pub.author || 'Unknown authors');
+            const formattedAuthors = formatAuthors(rawAuthors);
+            
+            // Handle equal contribution from note field
+            const equalContributors = getEqualContributors(pub.note);
+            const authorsWithAsterisks = markEqualContributors(formattedAuthors, equalContributors);
+            const authors = boldMyName(authorsWithAsterisks);
+            
+            const venue = convertLatexAccents(getVenue(pub));
+            const mainUrl = getMainUrl(pub);
+            
+            // Make the entire div clickable if there's a URL
+            const clickableAttributes = mainUrl ? 
+                `onclick="window.open('${mainUrl}', '_blank')" style="cursor: pointer;"` : '';
+            
+            // Venue and equal contribution note in a flex row
+            let venueRow = '';
+            if (venue || equalContributors.length > 0) {
+                venueRow = `<div class="publication-venue-row">
+                    ${venue ? `<div class=\"publication-venue\">${venue}</div>` : ''}
+                    ${equalContributors.length > 0 ? `<div class=\"publication-equal-note\">*equal contribution</div>` : ''}
+                </div>`;
+            }
+            
+            return `
+                <div class="publication" ${clickableAttributes}>
+                    <div class="publication-title">${title}</div>
+                    <div class="publication-authors">${authors}</div>
+                    ${venueRow}
+                </div>
+            `;
+        }
+
+        // Get venue information
+        function getVenue(pub) {
+            let venue = '';
+            
+            // Handle arXiv and bioRxiv as preprints
+            // Note: field names are converted to lowercase by the parser
+            if (pub.journal?.toLowerCase().includes('arxiv') || 
+                (pub.eprint && (pub.archiveprefix?.toLowerCase() === 'arxiv' || pub.archivePrefix?.toLowerCase() === 'arxiv'))) {
+                venue = `arXiv preprint${pub.year ? `, ${pub.year}` : ''}`;
+            } else if (pub.journal?.toLowerCase().includes('biorxiv') || pub.publisher?.toLowerCase().includes('biorxiv')) {
+                venue = `bioRxiv preprint${pub.year ? `, ${pub.year}` : ''}`;
+            } else if (pub.journal) {
+                venue = `${pub.journal}${pub.year ? `, ${pub.year}` : ''}`;
+            } else if (pub.booktitle) {
+                venue = `${pub.booktitle}${pub.year ? `, ${pub.year}` : ''}`;
+            } else if (pub.school) {
+                venue = `${pub.school}${pub.year ? `, ${pub.year}` : ''}`;
+            } else {
+                venue = pub.year || '';
+            }
+            
+            // Add presentation type if available (but not for preprints since they don't have presentations)
+            if (pub.presentation && pub.presentation.trim() && !venue.includes('preprint')) {
+                venue += ` (${pub.presentation.toUpperCase()})`;
+            }
+            
+            return venue;
+        }
+
+        // Get main publication URL
+        function getMainUrl(pub) {
+            if (pub.url) {
+                return pub.url;
+            } else if (pub.doi) {
+                return `https://doi.org/${pub.doi}`;
+            } else if (pub.eprint && (pub.archiveprefix?.toLowerCase() === 'arxiv' || pub.archivePrefix?.toLowerCase() === 'arxiv')) {
+                return `https://arxiv.org/abs/${pub.eprint}`;
+            }
+            return null;
+        }
+
+        // Load publications when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPublications();
+        });
     </script>
 </body>
 </html>
