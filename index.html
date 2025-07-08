@@ -185,6 +185,7 @@
         }
 
         .publication {
+            line-height: 1.2;
             background-color: var(--surface);
             padding: 0.7rem 1.3rem 0.5rem 1rem;
             margin-bottom: 0.4rem;
@@ -588,8 +589,7 @@
             </section>
 
             <section id="publications" class="section">
-                <h2>Publications</h2>
-                
+                <h2>Peer-reviewed articles</h2>
                                 <div id="publications-list">
                     <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">
                         Loading publications...
@@ -1102,7 +1102,7 @@
             
             // Add preprints section if any exist
             if (preprints.length > 0) {
-                html += '<h3 style="margin-top: 3rem;">Preprints</h3>';
+                html += '<h2 style="margin-top: 1rem;">Preprints</h2>';
                 preprints.forEach(pub => {
                     html += renderPublication(pub);
                 });
