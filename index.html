@@ -979,8 +979,12 @@
                     // Stronger attraction force than mouse avoidance
                     let strength = 0.3;
                     
-                    // Optional: fade attraction over time
-                    let timeFactor = 1 - (Date.now() - attractionStartTime) / attractionDuration;
+                    // Smooth fade attraction over time using a quadratic easing
+                    let progress = (Date.now() - attractionStartTime) / attractionDuration;
+                    let timeFactor = 1 - (progress * progress); // Quadratic easing out
+
+                    // // Optional: linear fade attraction over time
+                    // let timeFactor = 1 - (Date.now() - attractionStartTime) / attractionDuration;
                     strength *= timeFactor;
                     
                     return { x: dx * strength, y: dy * strength };
