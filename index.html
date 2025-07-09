@@ -758,6 +758,11 @@
         const numBirds = 300;
         let mouseX = 0;
         let mouseY = 0;
+        
+        // Click attraction variables
+        let attractionPoint = null;
+        let attractionStartTime = 0;
+        const attractionDuration = 1000; // 1 second in milliseconds
 
         // Set canvas size
         function resizeCanvas() {
@@ -771,6 +776,13 @@
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
+        });
+
+        // Track clicks for bird attraction
+        document.addEventListener('click', (e) => {
+            // Set attraction point to click location
+            attractionPoint = { x: e.clientX, y: e.clientY };
+            attractionStartTime = Date.now();
         });
 
         // Bird class
@@ -798,6 +810,7 @@
                 let alignment = this.align();     // steer towards average heading
                 let cohesion = this.cohere();     // steer towards center of mass
                 let mouse = this.avoidMouse();    // steer away from mouse
+                let attraction = this.attractToPoint(); // steer towards click point
                 let rotation = this.getRotationalForce(); // rotational force around center
                 let centripetal = this.getCentripetalForce(); // force toward center
 
@@ -806,12 +819,13 @@
                 const aliWeight = 1.0;
                 const cohWeight = 1.0;
                 const mouseWeight = 10.0;
+                const attractionWeight = 15.0; // Strong attraction to click point
                 const rotationWeight = 0.01; // adjust for desired effect
                 const centripetalWeight = 0.02; // adjust for desired effect
 
                 // Sum weighted steering forces
-                let steerX = separation.x * sepWeight + alignment.x * aliWeight + cohesion.x * cohWeight + mouse.x * mouseWeight + rotation.x * rotationWeight + centripetal.x * centripetalWeight;
-                let steerY = separation.y * sepWeight + alignment.y * aliWeight + cohesion.y * cohWeight + mouse.y * mouseWeight + rotation.y * rotationWeight + centripetal.y * centripetalWeight;
+                let steerX = separation.x * sepWeight + alignment.x * aliWeight + cohesion.x * cohWeight + mouse.x * mouseWeight + attraction.x * attractionWeight + rotation.x * rotationWeight + centripetal.x * centripetalWeight;
+                let steerY = separation.y * sepWeight + alignment.y * aliWeight + cohesion.y * cohWeight + mouse.y * mouseWeight + attraction.y * attractionWeight + rotation.y * rotationWeight + centripetal.y * centripetalWeight;
 
                 // Limit total steering force
                 let steerMag = Math.hypot(steerX, steerY);
@@ -943,6 +957,35 @@
                     dy /= d;
                     return { x: dx * 0.1, y: dy * 0.1 };
                 }
+                return { x: 0, y: 0 };
+            }
+
+            attractToPoint() {
+                // Check if attraction is active
+                if (!attractionPoint || (Date.now() - attractionStartTime) > attractionDuration) {
+                    return { x: 0, y: 0 };
+                }
+
+                // Calculate attraction force towards the click point
+                let dx = attractionPoint.x - this.x;
+                let dy = attractionPoint.y - this.y;
+                let d = Math.hypot(dx, dy);
+                
+                if (d > 0) {
+                    // Normalize and apply attraction force
+                    dx /= d;
+                    dy /= d;
+                    
+                    // Stronger attraction force than mouse avoidance
+                    let strength = 0.3;
+                    
+                    // Optional: fade attraction over time
+                    let timeFactor = 1 - (Date.now() - attractionStartTime) / attractionDuration;
+                    strength *= timeFactor;
+                    
+                    return { x: dx * strength, y: dy * strength };
+                }
+                
                 return { x: 0, y: 0 };
             }
 
