@@ -531,6 +531,14 @@
             .publication-links {
                 flex-wrap: wrap;
             }
+            /* Change "curriculum vitae" to "cv" on mobile */
+            nav a[href="#cv"] {
+                font-size: 0;
+            }
+            nav a[href="#cv"]::before {
+                content: "cv";
+                font-size: 0.95rem;
+            }
         }
 
         .publication-venue-row {
