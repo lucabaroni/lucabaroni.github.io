@@ -592,10 +592,10 @@
                     </div>
                     <div class="profile-content">
                         <p><h2>Hi!</h2> </p>
-                        <p>I'm Luca, a computational neuroscientist pursuing a PhD at Charles University. </p>
+                        <p>I'm Luca. I'm doing a PhD in computational neuroscience at Charles University. </p>
                         <!-- <p>My research focuses on modeling neural responses in the visual cortex using deep learning, uncovering computational mechanisms of sensory processing and developing stimulation strategies for cortical prostheses that more effectively engage visual representations to restore vision in blind individuals. </p> -->
-                        <p>I study sensory processing in the visual cortex, to uncover computational principles and develop stimulation strategies for cortical prostheses that more effectively engage visual representations for vision restoration in blind individuals.</p> 
-                        <p>Investigating how biological neural networks represent information, I becamed interested  in mechanistic interpretability of LLMs and, more broadly,  in  AI safety and alignment.</p>
+                        <p>I study sensory processing in the visual cortex find computational principles and develop stimulation strategies for cortical prostheses for vision restoration in blind individuals.</p> 
+                        <p>More recently, I started exploring mechanistic interpretability of LLMs and, more broadly, topics in AI safety and alignment.</p>
                         <!-- <p>I'm a computational neuroscience researcher working at the intersection of machine learning, neuroscience, and vision restoration. My PhD research focuses on using deep learning to model neural responses in visual cortex and applying interpretability techniques to uncover computational mechanisms.</p>
                 
                 <p>Through my work, I've identified novel invariance properties in biological neurons and designed stimulation strategies for cortical prostheses that engage visual representation in the brain to restore vision in blind subjects. More recently, driven by a growing interest in AI safety, I participated in the Supervised Program for Alignment Research (SPAR), where I gained practical expertise in mechanistic interpretability of large language models.</p> -->
@@ -803,8 +803,8 @@
         // Bird class
         class Bird {
             constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
+                this.x = Math.random() * canvas.width/2 + canvas.width/4;
+                this.y = Math.random() * canvas.height/3 + canvas.height/8;
                 this.vx = (Math.random() - 0.5) * 2;
                 this.vy = (Math.random() - 0.5) * 2;
                 this.maxSpeed = 2;
