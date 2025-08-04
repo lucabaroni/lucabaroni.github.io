@@ -9,8 +9,24 @@
     <!-- <title>Luca Baroni </title> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aptos+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Paradise:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap&family=Fugaz+One&display=swap&family=Unica+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'ngetic modern';
+            src: url('ngetic-modern.regular.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'ngetic modern';
+            src: url('ngetic-modern.italic.otf') format('opentype');
+            font-weight: 400;
+            font-style: italic;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -46,7 +62,7 @@
         }
 
         body {
-            font-family: 'Crimson Text', serif;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             line-height: 1.6;
             color: var(--text-primary);
             background-color: var(--background);
@@ -72,9 +88,26 @@
             padding: 1.2rem 1.2rem 0.5rem 1.2rem;
             position: relative;
             z-index: 1;
-            background: var(--background);
-            border-radius: 12px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px) saturate(120%);
+            -webkit-backdrop-filter: blur(12px) saturate(120%);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                0 1px 2px rgba(255, 255, 255, 0.1) inset,
+                0 -1px 2px rgba(255, 255, 255, 0.1) inset;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .container {
+                background: rgba(26, 26, 26, 0.6);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.3),
+                    0 1px 2px rgba(255, 255, 255, 0.05) inset,
+                    0 -1px 2px rgba(255, 255, 255, 0.05) inset;
+            }
         }
 
         header {
@@ -84,24 +117,24 @@
         }
 
         h1 {
-            font-family: 'Crimson Text', serif;
-            font-size: 2.3rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 4rem;
             font-weight: 700;
-            margin-bottom: 0.3rem;
-            letter-spacing: -0.02em;
+            margin-bottom: -1rem;
+            letter-spacing: -0.02em; /* Slightly tighter spacing for monospace */
+        }
+
+        .subtitle {
+            font-family: 'ngetic modern', sans-serif;
+            font-size: 1.44em;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-weight: 400;
+            letter-spacing: 0.00em;
             background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-color) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-        }
-
-        .subtitle {
-            font-family: 'Crimson Text', serif;
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            font-weight: 300;
-            letter-spacing: 0.02em;
         }
 
         nav {
@@ -113,12 +146,15 @@
         nav a {
             color: var(--text-primary);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 200;
             position: relative;
             transition: color 0.3s ease;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-size: 1.25rem;
+            text-transform: lowercase;
+            letter-spacing:-0.02em;
+            /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+            font-family: 'JetBrains Mono', monospace;
+            
         }
 
         nav a:hover {
@@ -167,24 +203,26 @@
         }
 
         h2 {
-            font-family: 'Crimson Text', serif;
+            /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+            font-family: 'JetBrains Mono', monospace;
             font-size: 1.5rem;
             margin-bottom: 1.2rem;
-            font-weight: 700;
+            font-weight: 300;
             color: var(--text-primary);
         }
 
         h3 {
-            font-family: 'Crimson Text', serif;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 1.1rem;
             margin-top: 1.2rem;
             margin-bottom: 0.7rem;
-            font-weight: 700;
+            font-weight: 00;
         }
 
         p {
             margin-bottom: 1rem;
             line-height: 1.8;
+            font-weight: 200;
         }
 
         .publication {
@@ -229,16 +267,18 @@
         }
 
         .publication-title {
-            font-family: 'Crimson Text', serif;
-            font-weight: 600;
-            font-size: 1.1rem;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-weight: 300;
+            font-size: 1.2rem;
             margin-bottom: 0.5rem;
             color: var(--text-primary);
         }
 
         .publication-authors {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             color: var(--text-secondary);
             font-size: 0.95rem;
+            font-weight: 200;
             margin-bottom: 0.5rem;
         }
 
@@ -246,7 +286,10 @@
             color: var(--accent-color);
             font-size: 0.9rem;
             margin-bottom: 0.5rem;
+            font-weight: 200;
+            letter-spacing: 0.05em;
             font-style: italic;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
 
         .publication-links {
@@ -293,19 +336,20 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
             margin-bottom: 0.25rem;
-            font-weight: 600;
+            font-weight: 200;
             letter-spacing: 0.03em;
         }
 
         .cv-title {
-            font-family: 'Crimson Text', serif;
-            font-weight: 600;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-weight: 200;
             font-size: 1.1rem;
             margin-bottom: 0.25rem;
         }
 
         .cv-location {
             color: var(--text-secondary);
+            font-weight: 200;
             font-style: italic;
         }
 
@@ -323,9 +367,21 @@
             height: 220px;
             border-radius: 50%;
             overflow: hidden;
-            border: 3px solid var(--border);
+            border: 3px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease;
             position: relative;
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.15),
+                0 2px 4px rgba(255, 255, 255, 0.1) inset;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .profile-image {
+                border: 3px solid rgba(255, 255, 255, 0.15);
+                box-shadow: 
+                    0 8px 24px rgba(0, 0, 0, 0.4),
+                    0 2px 4px rgba(255, 255, 255, 0.05) inset;
+            }
         }
 
         .profile-image:hover {
@@ -355,7 +411,7 @@
         .profile-content {
             flex: 1;
             line-height: 0.2;
-            font-family: 'Crimson Text', serif;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-size: 1.rem;
             /* letter-spacing: -0.01em; */
         }
@@ -389,7 +445,7 @@
         }
 
         .blog-title {
-            font-family: 'Crimson Text', serif;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-size: 1.75rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
@@ -410,12 +466,27 @@
         }
 
         .contact-info {
-            background-color: var(--surface);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px) saturate(110%);
+            -webkit-backdrop-filter: blur(8px) saturate(110%);
             padding: 1.2rem 1.2rem 0.6rem 1.2rem;
-            border-radius: 12px;
-            border: 1px solid var(--border);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
             padding-bottom: 0.6rem;
+            box-shadow: 
+                0 4px 16px rgba(0, 0, 0, 0.08),
+                0 1px 2px rgba(255, 255, 255, 0.1) inset;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .contact-info {
+                background: rgba(26, 26, 26, 0.4);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                box-shadow: 
+                    0 4px 16px rgba(0, 0, 0, 0.25),
+                    0 1px 2px rgba(255, 255, 255, 0.03) inset;
+            }
         }
 
         .contact-section {
@@ -430,8 +501,20 @@
             height: 200px;
             border-radius: 50%;
             overflow: hidden;
-            border: 3px solid var(--border);
+            border: 3px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease;
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.15),
+                0 2px 4px rgba(255, 255, 255, 0.1) inset;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .contact-image {
+                border: 3px solid rgba(255, 255, 255, 0.15);
+                box-shadow: 
+                    0 8px 24px rgba(0, 0, 0, 0.4),
+                    0 2px 4px rgba(255, 255, 255, 0.05) inset;
+            }
         }
 
         .contact-image:hover {
@@ -535,7 +618,7 @@
                 font-size: 1.5rem;
             }
             h2 {
-                font-size: 1.2rem;
+                font-size: 1rem;
             }
             nav {
                 gap: 0.7rem;
@@ -560,11 +643,16 @@
             gap: 1rem;
         }
         .publication-equal-note {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-size: 0.8rem;
             color: var(--text-secondary);
             font-style: italic;
             margin-top: 0;
             white-space: nowrap;
+        }
+
+        #publications-list {
+            transition: opacity 0.3s ease;
         }
     </style>
 </head>
@@ -573,14 +661,14 @@
     
     <div class="container">
         <header>
-            <h1>Luca Baroni</h1>
+            <h1>luca baroni</h1>
             <!-- <p class="subtitle">Computational Neuroscience & AI Safety</p> -->
             <nav>
-                <a href="#about" class="nav-link active">About</a>
-                <a href="#publications" class="nav-link">Publications</a>
+                <a href="#about" class="nav-link active">about</a>
+                <a href="#publications" class="nav-link">publications</a>
                 <a href="#cv" class="nav-link">curriculum vitae</a>
                 <!-- <a href="#thoughts" class="nav-link">Thoughts</a> -->
-                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#contact" class="nav-link">contact</a>
                 <!-- <a href="#birds" class="nav-link" style="margin-left:auto;">hide me</a> -->
             </nav>
         </header>
@@ -595,10 +683,10 @@
                         <div class="profile-placeholder" style="display:none;">LB</div>
                     </div>
                     <div class="profile-content">
-                        <p><h2>Hi!</h2> </p>
-                        <p>I'm Luca. I'm doing a PhD in computational neuroscience at Charles University. </p>
+                        <p style="font-size:1.5rem;">Hi!</p>
+                        <p>I'm Luca. I am currently doing a PhD in computational neuroscience at Charles University. </p>
                         <p>I study the visual cortex, its computational principles, and design stimulation strategies for cortical prostheses to evoke visual percepts in blind individuals.</p>
-                        <p>More recently, I became interested in mechanistic interpretability of LLMs and more broadly in AI safety and alignment.</p>
+                        <p>More recently, I started exploring mechanistic interpretability of LLMs and more broadly AI safety and alignment.</p>
                     </div>
                 </div>
 
@@ -606,8 +694,8 @@
 
             <section id="publications" class="section">
                 <h2>Peer-reviewed articles</h2>
-                                <div id="publications-list">
-                    <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+                <div id="publications-list">
+                    <div style="text-align: center; color: var(--text-secondary); padding: 2rem; opacity: 0.7;">
                         Loading publications...
                     </div>
                 </div>
@@ -720,7 +808,8 @@
                             <div class="contact-placeholder" style="display:none;">LB</div>
                         </div>
                         <div class="contact-details">
-                    <p><strong>Email:</strong> <a href="mailto:lucabaroni.research@gmail.com">lucabaroni@gmail.com</a></p>
+
+                    <p><strong>Email:</strong> <a href="mailto:loocabaroni.research@gmail.com">loocabaroni@gmail.com</a></p>
                     <p><strong>Location:</strong> Vienna, Austria</p>
                     <p><strong>GitHub:</strong> <a href="https://github.com/lucabaroni">GitHub Profile</a></p>
                     <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/luca-baroni-261161157">LinkedIn Profile</a></p>
@@ -737,6 +826,7 @@
         // Navigation functionality
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('.section');
+        let publicationsLoaded = false;
 
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
@@ -752,6 +842,12 @@
                     section.classList.remove('active');
                     if (section.id === targetId) {
                         section.classList.add('active');
+                        
+                        // Load publications only when Publications tab is clicked for the first time
+                        if (targetId === 'publications' && !publicationsLoaded) {
+                            publicationsLoaded = true;
+                            loadPublications();
+                        }
                     }
                 });
             });
@@ -1171,7 +1267,16 @@
                 });
             }
             
+            // Smooth transition by fading out loading state and fading in content
+            container.style.opacity = '0';
             container.innerHTML = html;
+            
+            // Force a reflow to ensure the opacity change takes effect
+            container.offsetHeight;
+            
+            // Fade in the content
+            container.style.transition = 'opacity 0.3s ease';
+            container.style.opacity = '1';
         }
 
         // Convert LaTeX accents to Unicode
@@ -1308,8 +1413,8 @@
             return result;
         }
 
-        // Make your name bold in author lists
-        function boldMyName(authorString) {
+        // Change color of your name in author lists
+        function colorMyName(authorString) {
             // Handle various formats of your name
             const nameVariations = [
                 'Luca Baroni',
@@ -1325,7 +1430,7 @@
                 // Create regex that matches the name with word boundaries - handle asterisks
                 const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                 const regex = new RegExp(`\\b${escapedName}(\\*?)\\b`, 'gi');
-                result = result.replace(regex, `<span style="font-weight: 900;">${name}$1</span>`);
+                result = result.replace(regex, `<span style="color: var(--accent-color);">${name}$1</span>`);
             });
             
             return result;
@@ -1340,7 +1445,7 @@
             // Handle equal contribution from note field
             const equalContributors = getEqualContributors(pub.note);
             const authorsWithAsterisks = markEqualContributors(formattedAuthors, equalContributors);
-            const authors = boldMyName(authorsWithAsterisks);
+            const authors = colorMyName(authorsWithAsterisks);
             
             const venue = convertLatexAccents(getVenue(pub));
             const mainUrl = getMainUrl(pub);
@@ -1408,10 +1513,7 @@
             return null;
         }
 
-        // Load publications when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            loadPublications();
-        });
+        // Publications will be loaded when the Publications tab is clicked for the first time
     </script>
 </body>
 </html>
