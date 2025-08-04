@@ -7,24 +7,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <title>Luca Baroni </title> -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Aptos+Display:wght@400;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Paradise:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap&family=Fugaz+One&display=swap&family=Unica+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         @font-face {
-            font-family: 'ngetic modern';
-            src: url('ngetic-modern.regular.otf') format('opentype');
+            font-family: 'Vulf Mono';
+            src: url('VulfMono-Regular.ttf') format('truetype');
             font-weight: 400;
             font-style: normal;
         }
 
         @font-face {
-            font-family: 'ngetic modern';
-            src: url('ngetic-modern.italic.otf') format('opentype');
-            font-weight: 400;
-            font-style: italic;
+            font-family: 'Vulf Mono';
+            src: url('VulfMono-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Vulf Mono';
+            src: url('VulfMono-Light.ttf') format('truetype');
+            font-weight: 300;
+            font-style: normal;
         }
 
         * {
@@ -117,15 +120,16 @@
         }
 
         h1 {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Vulf Mono', monospace;
             font-size: 4rem;
-            font-weight: 700;
+            font-weight: 300;
+            font-style: italic;
             margin-bottom: -1rem;
             letter-spacing: -0.02em; /* Slightly tighter spacing for monospace */
         }
 
         .subtitle {
-            font-family: 'ngetic modern', sans-serif;
+            font-family: 'Vulf Mono', monospace;
             font-size: 1.44em;
             color: var(--text-secondary);
             margin-bottom: 3rem;
@@ -153,7 +157,8 @@
             text-transform: lowercase;
             letter-spacing:-0.02em;
             /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Vulf Mono', monospace;
+            font-style: italic;
             
         }
 
@@ -204,7 +209,7 @@
 
         h2 {
             /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Vulf Mono', monospace;
             font-size: 1.5rem;
             margin-bottom: 1.2rem;
             font-weight: 300;
@@ -212,11 +217,11 @@
         }
 
         h3 {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Vulf Mono', monospace;
             font-size: 1.1rem;
             margin-top: 1.2rem;
             margin-bottom: 0.7rem;
-            font-weight: 00;
+            font-weight: 400;
         }
 
         p {
@@ -661,12 +666,12 @@
     
     <div class="container">
         <header>
-            <h1>luca baroni</h1>
+            <h1>Luca Baroni</h1>
             <!-- <p class="subtitle">Computational Neuroscience & AI Safety</p> -->
             <nav>
                 <a href="#about" class="nav-link active">about</a>
                 <a href="#publications" class="nav-link">publications</a>
-                <a href="#cv" class="nav-link">curriculum vitae</a>
+                <a href="#cv" class="nav-link">curriculum_vitae</a>
                 <!-- <a href="#thoughts" class="nav-link">Thoughts</a> -->
                 <a href="#contact" class="nav-link">contact</a>
                 <!-- <a href="#birds" class="nav-link" style="margin-left:auto;">hide me</a> -->
@@ -702,10 +707,10 @@
             </section>
 
             <section id="cv" class="section">
-                <h2>Curriculum Vitae</h2>
+                
                 
                 <div class="cv-section">
-                    <h3>Education</h3>
+                    <h3>education</h3>
                     <div class="cv-item">
                         <div class="cv-title">PhD in Computational Neuroscience</div>
                         <div class="cv-location">Charles University, Prague | Supervisor: Ján Antolík</div>
@@ -724,7 +729,7 @@
                 </div>
 
                 <div class="cv-section">
-                    <h3>Research Experience</h3>
+                    <h3>research experience</h3>
                     <div class="cv-item">
                         <div class="cv-title">SPAR (Supervised Program for Alignment Research)</div>
                         <div class="cv-location">AI Safety Research | Supervisor: Stefan Heimersheim</div>
