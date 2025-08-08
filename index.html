@@ -8,28 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <title>Luca Baroni </title> -->
 
+    <!-- Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Raleway font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        @font-face {
-            font-family: 'Vulf Mono';
-            src: url('VulfMono-Regular.ttf') format('truetype');
-            font-weight: 400;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'Vulf Mono';
-            src: url('VulfMono-Bold.ttf') format('truetype');
-            font-weight: 700;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'Vulf Mono';
-            src: url('VulfMono-Light.ttf') format('truetype');
-            font-weight: 300;
-            font-style: normal;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -46,32 +33,36 @@
             --text-primary: #1a1a1a;
             --text-secondary: #6b7280;
             --max-width: 800px;
-            /* --particle-color: rgba(0, 102, 204, 0.4); */
             --particle-color: rgba(0, 0, 0, 1)
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-            --primary-color: #ffffff;
-            --secondary-color: #b8b8b8;
-            --accent-color: #e2c6f7;
-            --background: #0a0a0a;
+                --primary-color: #ffffff;
+                --secondary-color: #b8b8b8;
+                --accent-color: #e2c6f7;
+                --background: #0a0a0a;
                 --surface: #1a1a1a;
-            --border: #2a2a2a;
-            --text-primary: #ffffff;
-            --text-secondary: #9ca3af;
-            --particle-color: rgb(255, 255, 255);
+                --border: #2a2a2a;
+                --text-primary: #ffffff;
+                --text-secondary: #9ca3af;
+                --particle-color: rgb(255, 255, 255);
             }
         }
 
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--text-primary);
             background-color: var(--background);
             transition: all 0.3s ease;
             position: relative;
             overflow-x: hidden;
+        }
+
+        /* Ensure Inter font is used everywhere */
+        *, *::before, *::after {
+            font-family: 'Inter', sans-serif;
         }
 
         #particles-canvas {
@@ -96,20 +87,12 @@
             -webkit-backdrop-filter: blur(12px) saturate(120%);
             border-radius: 24px;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.1),
-                0 1px 2px rgba(255, 255, 255, 0.1) inset,
-                0 -1px 2px rgba(255, 255, 255, 0.1) inset;
         }
 
         @media (prefers-color-scheme: dark) {
             .container {
                 background: rgba(26, 26, 26, 0.6);
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                box-shadow: 
-                    0 8px 32px rgba(0, 0, 0, 0.3),
-                    0 1px 2px rgba(255, 255, 255, 0.05) inset,
-                    0 -1px 2px rgba(255, 255, 255, 0.05) inset;
             }
         }
 
@@ -120,21 +103,22 @@
         }
 
         h1 {
-            font-family: 'Vulf Mono', monospace;
+            font-family: 'Raleway', sans-serif;
             font-size: 4rem;
-            font-weight: 300;
-            font-style: italic;
+            font-weight: 400;
+            /* font-style: italic; */
             margin-bottom: -1rem;
-            letter-spacing: -0.02em; /* Slightly tighter spacing for monospace */
+            letter-spacing: -0.05em;
+
         }
 
         .subtitle {
-            font-family: 'Vulf Mono', monospace;
+            font-family: 'Inter', sans-serif;
             font-size: 1.44em;
             color: var(--text-secondary);
             margin-bottom: 3rem;
             font-weight: 400;
-            letter-spacing: 0.00em;
+            letter-spacing: -0.02em;
             background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-color) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -150,16 +134,13 @@
         nav a {
             color: var(--text-primary);
             text-decoration: none;
-            font-weight: 200;
+            font-weight: 300;
             position: relative;
             transition: color 0.3s ease;
             font-size: 1.25rem;
             text-transform: lowercase;
-            letter-spacing:-0.02em;
-            /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
-            font-family: 'Vulf Mono', monospace;
-            font-style: italic;
-            
+            letter-spacing: -0.0em;
+            font-family: 'Raleway', sans-serif;
         }
 
         nav a:hover {
@@ -208,8 +189,7 @@
         }
 
         h2 {
-            /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
-            font-family: 'Vulf Mono', monospace;
+            font-family: 'Inter', sans-serif;
             font-size: 1.5rem;
             margin-bottom: 1.2rem;
             font-weight: 300;
@@ -217,7 +197,7 @@
         }
 
         h3 {
-            font-family: 'Vulf Mono', monospace;
+            font-family: 'Inter', sans-serif;
             font-size: 1.1rem;
             margin-top: 1.2rem;
             margin-bottom: 0.7rem;
@@ -259,7 +239,6 @@
 
         .publication:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
 
         .publication[onclick] {
@@ -268,11 +247,10 @@
 
         .publication[onclick]:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
         }
 
         .publication-title {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             font-weight: 300;
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
@@ -280,21 +258,21 @@
         }
 
         .publication-authors {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 200;
             margin-bottom: 0.5rem;
         }
 
         .publication-venue {
             color: var(--accent-color);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin-bottom: 0.5rem;
             font-weight: 200;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.00em;
             font-style: italic;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         .publication-links {
@@ -314,6 +292,7 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             font-weight: 500;
+            font-family: 'Inter', sans-serif;
         }
 
         .publication-links a:hover {
@@ -346,7 +325,7 @@
         }
 
         .cv-title {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             font-weight: 200;
             font-size: 1.1rem;
             margin-bottom: 0.25rem;
@@ -363,7 +342,6 @@
             gap: 1.2rem;
             align-items: center;
             margin-bottom: 0.7rem;
-            /* margin-right: rem; */
         }
 
         .profile-image {
@@ -375,17 +353,11 @@
             border: 3px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease;
             position: relative;
-            box-shadow: 
-                0 8px 24px rgba(0, 0, 0, 0.15),
-                0 2px 4px rgba(255, 255, 255, 0.1) inset;
         }
 
         @media (prefers-color-scheme: dark) {
             .profile-image {
                 border: 3px solid rgba(255, 255, 255, 0.15);
-                box-shadow: 
-                    0 8px 24px rgba(0, 0, 0, 0.4),
-                    0 2px 4px rgba(255, 255, 255, 0.05) inset;
             }
         }
 
@@ -411,20 +383,16 @@
             color: white;
             font-size: 3rem;
             font-weight: 600;
+            font-family: 'Inter', sans-serif;
         }
 
         .profile-content {
             flex: 1;
             line-height: 0.2;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 1.rem;
-            /* letter-spacing: -0.01em; */
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
         }
-/* 
-        .profile-content h2 {
-            font-family: 'Montserrat', sans-serif;
-        }    */
-        
+
         .blog-post {
             margin-bottom: 0.6rem;
             padding-bottom: 0.6rem;
@@ -450,7 +418,7 @@
         }
 
         .blog-title {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1.75rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
@@ -508,17 +476,11 @@
             overflow: hidden;
             border: 3px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease;
-            box-shadow: 
-                0 8px 24px rgba(0, 0, 0, 0.15),
-                0 2px 4px rgba(255, 255, 255, 0.1) inset;
         }
 
         @media (prefers-color-scheme: dark) {
             .contact-image {
                 border: 3px solid rgba(255, 255, 255, 0.15);
-                box-shadow: 
-                    0 8px 24px rgba(0, 0, 0, 0.4),
-                    0 2px 4px rgba(255, 255, 255, 0.05) inset;
             }
         }
 
@@ -544,6 +506,7 @@
             color: white;
             font-size: 2.5rem;
             font-weight: 600;
+            font-family: 'Inter', sans-serif;
         }
 
         .contact-details {
@@ -552,10 +515,6 @@
 
         .contact-details p {
             margin-bottom: 0.5rem;
-        }
-
-        .contact-info:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .contact-info a {
@@ -620,7 +579,7 @@
                 margin-bottom: 0.7rem;
             }
             h1 {
-                font-size: 1.5rem;
+                font-size: 2.5rem;
             }
             h2 {
                 font-size: 1rem;
@@ -631,13 +590,16 @@
             .publication-links {
                 flex-wrap: wrap;
             }
-            /* Change "curriculum vitae" to "cv" on mobile */
+            /* Change "curriculum_vitae" to "cv" on mobile */
             nav a[href="#cv"] {
                 font-size: 0;
             }
             nav a[href="#cv"]::before {
                 content: "cv";
-                font-size: 0.95rem;
+                font-size: 1.25rem;
+                font-weight: 300;
+                letter-spacing: -0.0em;
+                font-family: 'Raleway', sans-serif;
             }
         }
 
@@ -648,8 +610,9 @@
             gap: 1rem;
         }
         .publication-equal-note {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 0.8rem;
+            font-weight: 200;
             color: var(--text-secondary);
             font-style: italic;
             margin-top: 0;
@@ -671,7 +634,7 @@
             <nav>
                 <a href="#about" class="nav-link active">about</a>
                 <a href="#publications" class="nav-link">publications</a>
-                <a href="#cv" class="nav-link">curriculum_vitae</a>
+                <a href="#cv" class="nav-link">curriculum vitae</a>
                 <!-- <a href="#thoughts" class="nav-link">Thoughts</a> -->
                 <a href="#contact" class="nav-link">contact</a>
                 <!-- <a href="#birds" class="nav-link" style="margin-left:auto;">hide me</a> -->
@@ -710,7 +673,7 @@
                 
                 
                 <div class="cv-section">
-                    <h3>education</h3>
+                    <h2>Education</h2>
                     <div class="cv-item">
                         <div class="cv-title">PhD in Computational Neuroscience</div>
                         <div class="cv-location">Charles University, Prague | Supervisor: Ján Antolík</div>
@@ -729,7 +692,7 @@
                 </div>
 
                 <div class="cv-section">
-                    <h3>research experience</h3>
+                    <h2>Research experience</h2>
                     <div class="cv-item">
                         <div class="cv-title">SPAR (Supervised Program for Alignment Research)</div>
                         <div class="cv-location">AI Safety Research | Supervisor: Stefan Heimersheim</div>
