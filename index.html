@@ -208,6 +208,7 @@
             margin-bottom: 1rem;
             line-height: 1.8;
             font-weight: 200;
+            text-align: justify;
         }
 
         .publication {
@@ -348,7 +349,7 @@
             flex-shrink: 0;
             width: 220px;
             height: 220px;
-            clip-path: polygon(50% 0%, 85% 15%, 100% 50%, 85% 85%, 50% 100%, 15% 85%, 0% 50%, 15% 15%);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
             overflow: hidden;
             border: 3px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease;
@@ -472,7 +473,7 @@
             flex-shrink: 0;
             width: 200px;
             height: 200px;
-            clip-path: polygon(50% 0%, 85% 15%, 100% 50%, 85% 85%, 50% 100%, 15% 85%, 0% 50%, 15% 15%);
+            border-radius: 50%;
             overflow: hidden;
             border: 3px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease;
@@ -859,9 +860,13 @@
         // Bird class
         class Bird {
             constructor() {
-                this.x = (Math.random()-0.5) + canvas.width/2;
-                this.y =(Math.random()-0.5) * canvas.height/5 + canvas.height/5;
-                this.vx = (Math.random() - 0.5) * 2 + 20;
+                // this.x = (Math.random()-0.5) + canvas.width/2;
+                // this.y =(Math.random()-0.5) * canvas.height/5 + canvas.height/5;
+                // this.vx = (Math.random() - 0.5) * 2 + 20;
+                // this.vy = (Math.random() - 0.5) * 2;
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 2;
                 this.vy = (Math.random() - 0.5) * 2;
                 this.maxSpeed = 2;
                 this.maxForce = 0.05;
@@ -1463,7 +1468,7 @@
             
             // Add presentation type if available (but not for preprints since they don't have presentations)
             if (pub.presentation && pub.presentation.trim() && !venue.includes('preprint')) {
-                venue += ` (${pub.presentation.toUpperCase()})`;
+                venue += ` (${pub.presentation})`;
             }
             
             return venue;
