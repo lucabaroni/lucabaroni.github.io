@@ -1,0 +1,6 @@
+/cv/*
+!/cv/build_cv.py
+!/cv/cv_source.md
+!/cv/README.md
+/*.ttf
+/*.otf
