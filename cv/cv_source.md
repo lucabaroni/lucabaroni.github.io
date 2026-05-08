@@ -47,7 +47,7 @@ programming_ai_safety:
 ai_safety_expertise:
   - "Model organisms, LLM fine-tuning (SFT, GRPO), elicitation methods"
   - "Mechanistic interpretability (activation/attribution patching, steering vectors)"
-  - "Metacognitive abilities"
+  - "Introspection/metacognitive abilities"
   - "LLMs as judges, behavioral evals"
 
 equal_note: "* denotes equal contributions"
@@ -125,10 +125,10 @@ venue: Journal of Neuroscience, 2024
 
 
 ## Preprints
-<!-- ### Model organisms are leaky: perplexity differencing often reveals finetuning objectives
-authors: Abu Baker M.{*}, **Baroni L.{*}**, Wilhelm D.
-venue: arXiv, 2026 -->
+### Model organisms are leaky: perplexity differencing often reveals finetuning objectives
+authors: Abu Baker M.{*}, **Baroni L.{*}**, Wilhelm D.{*}
+venue: arXiv, 2026 (Submitted on 1 May 2026, appearing shortly. Available upon request).
 
-### Beyond retinotopy: exploiting native visual representations in cortical neuroprostheses for vision loss remediation
+<!-- ### Beyond retinotopy: exploiting native visual representations in cortical neuroprostheses for vision loss remediation
 authors: **Baroni L.**, Picek M., Patel S., Tolias A. S., Antolík J.
-venue: BioRxiv, 2025
+venue: BioRxiv, 2025 -->

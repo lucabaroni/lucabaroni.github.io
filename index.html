@@ -653,7 +653,7 @@
                     </div>
                     <div class="profile-content">
                         <p style="font-size:1.5rem;">Hi, I'm Luca!</p>
-                        <p>I am an AI safety researcher working on model introspection, model organisms and CoT faithfulness/pathologies.</p>
+                        <p>I am a technical AI safety researcher working on model introspection, model organisms and CoT faithfulness/pathologies. I am currently a Visiting Researcher at Meridian, Cambridge.</p>
                         <p>Alongside this, I am completing a PhD in computational neuroscience focused on the visual cortex and vision restoration.</p>
                         <!-- <p>Some time ago, I was studying theoretical physics.</p> -->
                         <!-- <p>I have a background in physics and I am completing a PhD in <strong>computational neuroscience</strong>, where I study the visual cortex and neurostimulation approaches for vision restoration in blind subjects.</p>
@@ -1232,8 +1232,9 @@
             const preprints = [];
             
             publications.forEach(pub => {
-                const isPreprint = pub.journal?.toLowerCase().includes('arxiv') || 
+                const isPreprint = pub.journal?.toLowerCase().includes('arxiv') ||
                                  pub.journal?.toLowerCase().includes('biorxiv') ||
+                                 pub.journal?.toLowerCase() === 'preprint' ||
                                  (pub.eprint && (pub.archiveprefix?.toLowerCase() === 'arxiv' || pub.archivePrefix?.toLowerCase() === 'arxiv'));
                 
                 if (isPreprint) {
@@ -1474,6 +1475,8 @@
                 venue = `arXiv preprint${pub.year ? `, ${pub.year}` : ''}`;
             } else if (pub.journal?.toLowerCase().includes('biorxiv') || pub.publisher?.toLowerCase().includes('biorxiv')) {
                 venue = `bioRxiv preprint${pub.year ? `, ${pub.year}` : ''}`;
+            } else if (pub.journal?.toLowerCase() === 'preprint') {
+                venue = `Preprint${pub.year ? `, ${pub.year}` : ''}`;
             } else if (pub.journal) {
                 venue = `${pub.journal}${pub.year ? `, ${pub.year}` : ''}`;
             } else if (pub.booktitle) {

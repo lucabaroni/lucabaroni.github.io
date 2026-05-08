@@ -60,12 +60,13 @@ Each `##` heading becomes a section in the right column.
 September 2020 — Present. Supervisor: Jan Antolík
 ```
 
-**Publications (Peer-reviewed) / Preprints** — each entry is a `###` heading with `authors:` and `venue:` lines:
+**Publications (Peer-reviewed) / Preprints** — each entry is a `###` heading with `authors:` and `venue:` lines. You can also add an optional `note:` line for status text under the venue:
 
 ```markdown
 ### Paper title here
 authors: **Baroni L.***, Other A., Author B.
 venue: NeurIPS, 2025
+note: Camera-ready in progress. Available upon request.
 ```
 
 ### Inline formatting

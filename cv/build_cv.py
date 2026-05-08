@@ -294,6 +294,12 @@ CSS = """    @page {
       color: var(--body-text);
     }
 
+    .pub-entry .pub-note {
+      font-size: 8.75pt;
+      color: var(--body-text);
+      line-height: 1.2;
+    }
+
     .about-text {
       margin-bottom: 0.18em;
       orphans: 3;
@@ -446,7 +452,7 @@ def parse_entry_section(content: str):
 def parse_pub_section(content: str):
     """
     Parse a publications/preprints section.  Returns a list of entries.
-    Each entry: {"title": str, "authors": str, "venue": str}
+    Each entry: {"title": str, "authors": str, "venue": str, "note": str}
 
     HTML comment blocks (<!-- ... -->) are stripped first, so you can
     comment out an entry by wrapping its ### block in <!-- ... -->.
@@ -464,13 +470,16 @@ def parse_pub_section(content: str):
         title = lines[0].strip()
         authors = ""
         venue = ""
+        note = ""
         for line in lines[1:]:
             line = line.strip()
             if line.startswith("authors:"):
                 authors = line[len("authors:"):].strip()
             elif line.startswith("venue:"):
                 venue = line[len("venue:"):].strip()
-        entries.append({"title": title, "authors": authors, "venue": venue})
+            elif line.startswith("note:"):
+                note = line[len("note:"):].strip()
+        entries.append({"title": title, "authors": authors, "venue": venue, "note": note})
     return entries
 
 
@@ -579,7 +588,12 @@ def build_main(sections: list, equal_note: str | None = None) -> str:
                     f'      <div class="pub-title">{h(pub["title"])}</div>\n'
                     f'      <div class="pub-authors">{md_inline(pub["authors"])}</div>\n'
                     f'      <div class="pub-venue">{h(pub["venue"])}</div>\n'
-                    f'    </div>\n'
+                    + (
+                        f'      <div class="pub-note">{md_inline(pub["note"])}</div>\n'
+                        if pub.get("note")
+                        else ""
+                    )
+                    + f'    </div>\n'
                 )
             # Render equal_note once, after the last pub-type section
             if equal_note and i == last_pub_idx:
