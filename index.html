@@ -1,12 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Luca Baroni - PhD Computational Neuroscience | AI Safety Research</title>
-    <meta name="description" content="Luca Baroni, PhD student in computational neuroscience at Charles University. Research in visual cortex, cortical prostheses, and AI safety.">
-    <meta name="keywords" content="computational neuroscience, AI safety, visual cortex, cortical prostheses, LLM interpretability, AI safety,">
+    <title>Luca Baroni - AI Safety Research | PhD Computational Neuroscience</title>
+    <meta name="description" content="Luca Baroni, AI safety researcher working on model introspection, model organisms, and chain-of-thought faithfulness. PhD in computational neuroscience from Charles University.">
+    <meta name="keywords" content="AI safety, computational neuroscience, model introspection, LLM interpretability, visual cortex, cortical prostheses">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <title>Luca Baroni </title> -->
+    <meta name="author" content="Luca Baroni">
+    <link rel="canonical" href="https://lucabaroni.com/">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230066cc'/%3E%3Cstop offset='1' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpolygon points='50,6 88,28 88,72 50,94 12,72 12,28' fill='url(%23g)' stroke='url(%23g)' stroke-width='10' stroke-linejoin='round'/%3E%3Ctext x='50' y='64' font-family='Helvetica,Arial,sans-serif' font-size='38' font-weight='700' fill='white' text-anchor='middle'%3ELB%3C/text%3E%3C/svg%3E">
+
+    <!-- Open Graph / social sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lucabaroni.com/">
+    <meta property="og:title" content="Luca Baroni - AI Safety Research">
+    <meta property="og:description" content="AI safety researcher working on model introspection, model organisms, and chain-of-thought faithfulness. PhD in computational neuroscience.">
+    <meta property="og:image" content="https://lucabaroni.com/profile.jpg">
+    <meta name="twitter:card" content="summary">
+
+    <!-- Set theme before first paint to avoid a flash of the wrong theme -->
+    <script>
+        (function() {
+            const stored = localStorage.getItem('theme');
+            const theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.dataset.theme = theme;
+        })();
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Luca Baroni",
+      "url": "https://lucabaroni.com/",
+      "image": "https://lucabaroni.com/profile.jpg",
+      "jobTitle": "AI Safety Researcher",
+      "alumniOf": "Charles University",
+      "sameAs": [
+        "https://github.com/lucabaroni",
+        "https://www.linkedin.com/in/luca-baroni-261161157"
+      ]
+    }
+    </script>
 
     <!-- Inter font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,18 +71,16 @@
             --particle-color: rgba(0, 0, 0, 1)
         }
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --primary-color: #ffffff;
-                --secondary-color: #b8b8b8;
-                --accent-color: #e2c6f7;
-                --background: #0a0a0a;
-                --surface: #1a1a1a;
-                --border: #2a2a2a;
-                --text-primary: #ffffff;
-                --text-secondary: #9ca3af;
-                --particle-color: rgb(255, 255, 255);
-            }
+        html[data-theme="dark"] {
+            --primary-color: #ffffff;
+            --secondary-color: #b8b8b8;
+            --accent-color: #e2c6f7;
+            --background: #0a0a0a;
+            --surface: #1a1a1a;
+            --border: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --particle-color: rgb(255, 255, 255);
         }
 
         body {
@@ -89,11 +122,9 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        @media (prefers-color-scheme: dark) {
-            .container {
-                background: rgba(26, 26, 26, 0.6);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-            }
+        html[data-theme="dark"] .container {
+            background: rgba(26, 26, 26, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         header {
@@ -145,6 +176,42 @@
 
         nav a:hover {
             color: var(--accent-color);
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        #theme-toggle {
+            margin-left: auto;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            line-height: 1;
+            padding: 0 0.3rem;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        #theme-toggle:hover {
+            color: var(--accent-color);
+            transform: rotate(-15deg);
+        }
+
+        #theme-toggle .icon-sun {
+            display: none;
+        }
+
+        html[data-theme="dark"] #theme-toggle .icon-sun {
+            display: block;
+        }
+
+        html[data-theme="dark"] #theme-toggle .icon-moon {
+            display: none;
         }
 
         nav a.active::after {
@@ -231,11 +298,12 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(0, 102, 204, 0.1), transparent);
-            transition: left 0.5s ease;
+            transition: none; /* snap back instantly so the glow never sweeps in reverse */
         }
 
         .publication:hover::before {
             left: 100%;
+            transition: left 0.5s ease;
         }
 
         .publication:hover {
@@ -345,26 +413,32 @@
             margin-bottom: 0.7rem;
         }
 
+        /* Hexagonal frame: the rim is the padded background showing through the
+           clip-path, since a regular border would be cut away by the clip */
         .profile-image {
             flex-shrink: 0;
             width: 220px;
             height: 220px;
+            padding: 3px;
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            overflow: hidden;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.25);
             transition: all 0.3s ease;
             position: relative;
+            cursor: pointer;
         }
 
-        @media (prefers-color-scheme: dark) {
-            .profile-image {
-                border: 3px solid rgba(255, 255, 255, 0.15);
-            }
+        html[data-theme="dark"] .profile-image {
+            background: rgba(255, 255, 255, 0.25);
         }
 
         .profile-image:hover {
-            border-color: var(--accent-color);
+            background: var(--accent-color);
             transform: scale(1.02);
+        }
+
+        .profile-image img,
+        .profile-image .profile-placeholder {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
         }
 
         .profile-image img {
@@ -372,6 +446,14 @@
             height: 100%;
             object-fit: cover;
             display: block;
+        }
+
+        /* Images aren't selectable or draggable, so stray double clicks
+           don't highlight them */
+        img {
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-user-drag: none;
         }
 
         .profile-placeholder {
@@ -389,9 +471,12 @@
 
         .profile-content {
             flex: 1;
-            line-height: 0.2;
             font-family: 'Inter', sans-serif;
             font-size: 1rem;
+        }
+
+        .profile-content p:last-child {
+            margin-bottom: 0;
         }
 
         .blog-post {
@@ -453,14 +538,12 @@
                 0 1px 2px rgba(255, 255, 255, 0.1) inset;
         }
 
-        @media (prefers-color-scheme: dark) {
-            .contact-info {
-                background: rgba(26, 26, 26, 0.4);
-                border: 1px solid rgba(255, 255, 255, 0.08);
-                box-shadow: 
-                    0 4px 16px rgba(0, 0, 0, 0.25),
-                    0 1px 2px rgba(255, 255, 255, 0.03) inset;
-            }
+        html[data-theme="dark"] .contact-info {
+            background: rgba(26, 26, 26, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow:
+                0 4px 16px rgba(0, 0, 0, 0.25),
+                0 1px 2px rgba(255, 255, 255, 0.03) inset;
         }
 
         .contact-section {
@@ -469,25 +552,29 @@
             align-items: center;
         }
 
+        /* Same hexagonal frame as the about page */
         .contact-image {
             flex-shrink: 0;
             width: 200px;
             height: 200px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            padding: 3px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: rgba(0, 0, 0, 0.25);
             transition: all 0.3s ease;
         }
 
-        @media (prefers-color-scheme: dark) {
-            .contact-image {
-                border: 3px solid rgba(255, 255, 255, 0.15);
-            }
+        html[data-theme="dark"] .contact-image {
+            background: rgba(255, 255, 255, 0.25);
         }
 
         .contact-image:hover {
-            border-color: var(--accent-color);
+            background: var(--accent-color);
             transform: scale(1.05);
+        }
+
+        .contact-image img,
+        .contact-image .contact-placeholder {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
         }
 
         .contact-image img {
@@ -623,6 +710,33 @@
         #publications-list {
             transition: opacity 0.3s ease;
         }
+
+        .flock-hint {
+            position: fixed;
+            bottom: 0.8rem;
+            right: 1rem;
+            z-index: 2;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 200;
+            font-style: italic;
+            opacity: 0.6;
+            letter-spacing: 0.03em;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .flock-hint {
+                display: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -638,7 +752,22 @@
                 <a href="#cv" class="nav-link">curriculum vitae</a>
                 <!-- <a href="#thoughts" class="nav-link">Thoughts</a> -->
                 <a href="#contact" class="nav-link">contact</a>
-                <!-- <a href="#birds" class="nav-link" style="margin-left:auto;">hide me</a> -->
+                <button id="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
+                    <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="4.5"></circle>
+                        <line x1="12" y1="1.5" x2="12" y2="3.5"></line>
+                        <line x1="12" y1="20.5" x2="12" y2="22.5"></line>
+                        <line x1="4.6" y1="4.6" x2="6" y2="6"></line>
+                        <line x1="18" y1="18" x2="19.4" y2="19.4"></line>
+                        <line x1="1.5" y1="12" x2="3.5" y2="12"></line>
+                        <line x1="20.5" y1="12" x2="22.5" y2="12"></line>
+                        <line x1="4.6" y1="19.4" x2="6" y2="18"></line>
+                        <line x1="18" y1="6" x2="19.4" y2="4.6"></line>
+                    </svg>
+                </button>
             </nav>
         </header>
 
@@ -646,8 +775,7 @@
             <section id="about" class="section active">
                 <!-- <h2>About me</h2> -->
                 <div class="profile-section">
-                    <div class="profile-image">
-                        <!-- Replace src with your actual photo path -->
+                    <div class="profile-image" id="profile-photo" title="Get in touch" role="link" tabindex="0" aria-label="Go to contact page">
                         <img src="profile.jpg" alt="Luca Baroni" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="profile-placeholder" style="display:none;">LB</div>
                     </div>
@@ -697,14 +825,19 @@
                 <div class="cv-section">
                     <h2>Work/Research experience</h2>
                     <div class="cv-item">
+                        <div class="cv-title">ERA AI Safety Fellow</div>
+                        <div class="cv-location">AI Safety Research fellowship, Cambridge</div>
+                        <div class="cv-date">July 2026 - September 2026</div>
+                    </div>
+                    <div class="cv-item">
                         <div class="cv-title">Meridian Visiting Researcher</div>
                         <div class="cv-location">Independent AI safety researcher on sleeper agents, @Meridian, Cambridge </div>
-                        <div class="cv-date">January 2026 - Present</div>
+                        <div class="cv-date">January 2026 - June 2026</div>
                     </div>
                     <div class="cv-item">
                         <div class="cv-title">MARS 4.0 scholar</div>
                         <div class="cv-location">AI Safety Research program, Cambridge/Remote | Mentors: Puria Radmard, Shi Feng, Kola Ayonrinde </div>
-                        <div class="cv-date">December 2025 - Present</div>
+                        <div class="cv-date">December 2025 - February 2026</div>
                     </div>
                     <div class="cv-item">
                         <div class="cv-title">ARENA 6.0 scholar</div>
@@ -796,11 +929,10 @@
                         <div class="contact-details">
 
                     <p><strong>Email:</strong> <a href="mailto:luca@lucabaroni.com">luca@lucabaroni.com</a></p>
-              
+
                     <p><strong>Location:</strong> Vienna, Austria</p>
-                    <p><strong>GitHub:</strong> <a href="https://github.com/lucabaroni">GitHub Profile</a></p>
-                    <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/luca-baroni-261161157">LinkedIn Profile</a></p>
-                    <p><strong>Research group:</strong> <a href="https://csng.mff.cuni.cz">CSNG webpage</a></p>
+                    <p><strong>GitHub:</strong> <a href="https://github.com/lucabaroni" target="_blank" rel="noopener">github.com/lucabaroni</a></p>
+                    <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/luca-baroni-261161157" target="_blank" rel="noopener">linkedin.com/in/luca-baroni</a></p>
                             <!-- <a href="https://github.com/yourusername">GitHub</a></p>  <a href="https://linkedin.com/in/yourusername">LinkedIn</a></p> -->
                         </div>
                     </div>
@@ -809,35 +941,88 @@
         </main>
     </div>
 
+    <div class="flock-hint">the birds avoid your cursor &mdash; click anywhere to call them</div>
+
     <script>
         // Navigation functionality
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('.section');
         let publicationsLoaded = false;
 
+        function showSection(targetId) {
+            navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + targetId));
+
+            sections.forEach(section => {
+                section.classList.remove('active');
+                if (section.id === targetId) {
+                    section.classList.add('active');
+
+                    if (targetId === 'publications' && !publicationsLoaded) {
+                        publicationsLoaded = true;
+                        loadPublications();
+                    }
+                }
+            });
+        }
+
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = link.getAttribute('href').substring(1);
-                
-                // Update active nav
-                navLinks.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-                
-                // Show target section
-                sections.forEach(section => {
-                    section.classList.remove('active');
-                    if (section.id === targetId) {
-                        section.classList.add('active');
-                        
-                        // Load publications only when Publications tab is clicked for the first time
-                        if (targetId === 'publications' && !publicationsLoaded) {
-                            publicationsLoaded = true;
-                            loadPublications();
-                        }
-                    }
-                });
+                showSection(targetId);
+                history.replaceState(null, '', '#' + targetId);
             });
+        });
+
+        // Deep linking: open the section named in the URL hash, if any
+        const initialHash = window.location.hash.substring(1);
+        if (initialHash && document.getElementById(initialHash)?.classList.contains('section')) {
+            showSection(initialHash);
+        }
+
+        // Clicking the profile photo leads to the contact page
+        const profilePhoto = document.getElementById('profile-photo');
+        function goToContact() {
+            showSection('contact');
+            history.replaceState(null, '', '#contact');
+        }
+        profilePhoto.addEventListener('click', goToContact);
+        profilePhoto.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                goToContact();
+            }
+        });
+
+        // Preload publications in the background so the tab opens instantly
+        function preloadPublications() {
+            if (!publicationsLoaded) {
+                publicationsLoaded = true;
+                loadPublications();
+            }
+        }
+        if (window.requestIdleCallback) {
+            requestIdleCallback(preloadPublications, { timeout: 2000 });
+        } else {
+            setTimeout(preloadPublications, 2000);
+        }
+
+        // Theme toggle: manual choice is persisted; otherwise follow the system.
+        // The sun/moon icons swap via CSS based on the data-theme attribute.
+        const themeToggle = document.getElementById('theme-toggle');
+        const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        themeToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+        });
+
+        darkScheme.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                document.documentElement.dataset.theme = e.matches ? 'dark' : 'light';
+            }
         });
 
         // Bird flocking simulation
@@ -854,10 +1039,17 @@
         let attractionStartTime = 0;
         const attractionDuration = 1000; // 1 second in milliseconds
 
-        // Set canvas size
+        // Logical canvas size (CSS pixels); the backing store is scaled for sharp rendering on retina displays
+        let viewWidth = window.innerWidth;
+        let viewHeight = window.innerHeight;
+
         function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            const dpr = window.devicePixelRatio || 1;
+            viewWidth = window.innerWidth;
+            viewHeight = window.innerHeight;
+            canvas.width = viewWidth * dpr;
+            canvas.height = viewHeight * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
@@ -875,6 +1067,14 @@
             attractionStartTime = Date.now();
         });
 
+        // Rapid clicks on the page background (the birds area) shouldn't start
+        // a text selection, which highlighted nearby content
+        document.addEventListener('mousedown', (e) => {
+            if (e.detail > 1 && (e.target === document.body || e.target === document.documentElement)) {
+                e.preventDefault();
+            }
+        });
+
         // Bird class
         class Bird {
             constructor() {
@@ -882,14 +1082,23 @@
                 // this.y =(Math.random()-0.5) * canvas.height/5 + canvas.height/5;
                 // this.vx = (Math.random() - 0.5) * 2 + 20;
                 // this.vy = (Math.random() - 0.5) * 2;
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
+                this.x = Math.random() * viewWidth;
+                this.y = Math.random() * viewHeight;
                 this.vx = (Math.random() - 0.5) * 2;
                 this.vy = (Math.random() - 0.5) * 2;
                 this.maxSpeed = 2;
                 this.maxForce = 0.05;
                 this.history = [];
                 this.maxHistory = 0;
+                this.hue = Math.random() * 360;
+                this.sat = 50 + Math.random() * 25;
+                this.size = 0.8 + Math.random() * 0.5;
+                this.flapPhase = Math.random() * Math.PI * 2;
+            }
+
+            color(alpha = 0.9) {
+                const dark = document.documentElement.dataset.theme === 'dark';
+                return `hsla(${this.hue}, ${this.sat}%, ${dark ? 72 : 42}%, ${alpha})`;
             }
 
             update() {
@@ -939,15 +1148,18 @@
                     this.vy = (this.vy / speed) * this.maxSpeed;
                 }
 
+                // Flap wings faster when flying faster
+                this.flapPhase += 0.12 + Math.min(speed, this.maxSpeed) * 0.07;
+
                 // Update position
                 this.x += this.vx;
                 this.y += this.vy;
 
                 // Periodic boundaries - wrap around edges
-                if (this.x < 0) this.x = canvas.width;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.y < 0) this.y = canvas.height;
-                if (this.y > canvas.height) this.y = 0;
+                if (this.x < 0) this.x = viewWidth;
+                if (this.x > viewWidth) this.x = 0;
+                if (this.y < 0) this.y = viewHeight;
+                if (this.y > viewHeight) this.y = 0;
             }
 
             align() {
@@ -1089,8 +1301,8 @@
 
             getRotationalForce() {
                 // Calculate a force perpendicular to the vector from center to bird (for counterclockwise rotation)
-                const centerX = canvas.width / 2;
-                const centerY = canvas.height / 2;
+                const centerX = viewWidth / 2;
+                const centerY = viewHeight / 2;
                 let dx = this.x - centerX;
                 let dy = this.y - centerY;
                 // Perpendicular vector (for 2D: (dx, dy) -> (-dy, dx) for CCW)
@@ -1108,8 +1320,8 @@
 
             getCentripetalForce() {
                 // Vector from bird to center
-                const centerX = canvas.width / 2;
-                const centerY = canvas.height / 2;
+                const centerX = viewWidth / 2;
+                const centerY = viewHeight / 2;
                 let dx = centerX - this.x;
                 let dy = centerY - this.y;
                 // Normalize
@@ -1122,36 +1334,43 @@
             }
 
             draw() {
-                // Draw bird as a small triangle pointing in direction of movement
+                // Draw bird as a small swallow-like silhouette with swept-back
+                // flapping wings, pointing in the direction of movement
+                const s = this.size;
+                const flap = Math.sin(this.flapPhase);
+                const wing = (4.5 + flap * 2.5) * s; // lateral wing extent oscillates as the bird flaps
+
                 ctx.save();
                 ctx.translate(this.x, this.y);
                 ctx.rotate(Math.atan2(this.vy, this.vx));
-                
+
                 ctx.beginPath();
-                ctx.moveTo(6, 0);
-                ctx.lineTo(-3, -2);
-                ctx.lineTo(-3, 2);
+                ctx.moveTo(6 * s, 0);                                                       // beak
+                ctx.bezierCurveTo(3 * s, 1.1 * s, 0.5 * s, wing * 0.3, -4.5 * s, wing);     // right wing leading edge, swept back to the tip
+                ctx.quadraticCurveTo(-2.2 * s, wing * 0.18, -3.2 * s, 0.8 * s);             // trailing edge curving back to the body
+                ctx.lineTo(-5.5 * s, 0);                                                    // forked tail
+                ctx.lineTo(-3.2 * s, -0.8 * s);
+                ctx.quadraticCurveTo(-2.2 * s, -wing * 0.18, -4.5 * s, -wing);              // left wing
+                ctx.bezierCurveTo(0.5 * s, -wing * 0.3, 3 * s, -1.1 * s, 6 * s, 0);
                 ctx.closePath();
-                
-                ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--particle-color');
+
+                ctx.fillStyle = this.color();
                 ctx.fill();
-                
+
                 ctx.restore();
 
                 // Draw trail
                 if (this.history.length > 1) {
                     ctx.beginPath();
                     ctx.moveTo(this.history[0].x, this.history[0].y);
-                    
+
                     for (let i = 1; i < this.history.length; i++) {
                         ctx.lineTo(this.history[i].x, this.history[i].y);
                     }
-                    
-                    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--particle-color');
+
+                    ctx.strokeStyle = this.color(0.2);
                     ctx.lineWidth = 0.5;
-                    ctx.globalAlpha = 0.2;
                     ctx.stroke();
-                    ctx.globalAlpha = 1;
                 }
             }
         }
@@ -1163,7 +1382,7 @@
 
         // Animation loop
         function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, viewWidth, viewHeight);
 
             for (let bird of birds) {
                 bird.update();
@@ -1173,7 +1392,14 @@
             requestAnimationFrame(animate);
         }
 
-        animate();
+        // Respect reduced-motion preference: show a single static frame instead of the animation
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            for (let bird of birds) {
+                bird.draw();
+            }
+        } else {
+            animate();
+        }
 
         // Load and parse publications from BibTeX file
         async function loadPublications() {
@@ -1183,7 +1409,6 @@
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
                 const bibText = await response.text();
-                console.log('BibTeX content:', bibText);
                 const publications = parseBibTeX(bibText);
                 renderPublications(publications);
             } catch (error) {
