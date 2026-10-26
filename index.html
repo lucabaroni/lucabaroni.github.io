@@ -68,7 +68,8 @@
             --text-primary: #1a1a1a;
             --text-secondary: #6b7280;
             --max-width: 800px;
-            --particle-color: rgba(0, 0, 0, 1)
+            --particle-color: rgba(0, 0, 0, 1);
+            --nav-bar-background: rgba(255, 255, 255, 0.65);
         }
 
         html[data-theme="dark"] {
@@ -81,6 +82,7 @@
             --text-primary: #ffffff;
             --text-secondary: #9ca3af;
             --particle-color: rgb(255, 255, 255);
+            --nav-bar-background: rgba(10, 10, 10, 0.65);
         }
 
         body {
@@ -109,10 +111,21 @@
             z-index: -1;
         }
 
+        /* Two columns: the content card on the left and a sticky section nav
+           on the right (it becomes a bar across the top on narrow screens) */
+        .page {
+            display: grid;
+            grid-template-columns: minmax(0, 720px) 170px;
+            column-gap: 3rem;
+            justify-content: center;
+            align-items: start;
+            padding: 2.5rem 1.5rem 4rem;
+        }
+
         .container {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 1.2rem 1.2rem 0.5rem 1.2rem;
+            grid-column: 1;
+            grid-row: 1;
+            padding: 2.5rem 2.75rem 3rem;
             position: relative;
             z-index: 1;
             background: rgba(255, 255, 255, 0.2);
@@ -127,20 +140,13 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        header {
-            margin-bottom: 1.2rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-
         h1 {
             font-family: 'Raleway', sans-serif;
             font-size: 4rem;
             font-weight: 400;
-            /* font-style: italic; */
-            margin-bottom: -1rem;
+            line-height: 1.1;
             letter-spacing: -0.05em;
-
+            margin-bottom: 2rem;
         }
 
         .subtitle {
@@ -156,26 +162,39 @@
             background-clip: text;
         }
 
-        nav {
+        .side-nav {
+            grid-column: 2;
+            grid-row: 1;
+            position: sticky;
+            top: 3rem;
+            z-index: 2;
             display: flex;
-            gap: 1.2rem;
-            margin-top: 1.2rem;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.6rem;
+            padding-top: 2.6rem;
         }
 
-        nav a {
-            color: var(--text-primary);
+        .side-nav a {
+            color: var(--text-secondary);
             text-decoration: none;
             font-weight: 300;
-            position: relative;
-            transition: color 0.3s ease;
             font-size: 1.25rem;
+            line-height: 1.3;
             text-transform: lowercase;
-            letter-spacing: -0.0em;
             font-family: 'Raleway', sans-serif;
+            padding-left: 0.9rem;
+            border-left: 2px solid transparent;
+            transition: color 0.3s ease, border-color 0.3s ease;
         }
 
-        nav a:hover {
-            color: var(--accent-color);
+        .side-nav a:hover {
+            color: var(--text-primary);
+        }
+
+        .side-nav a.active {
+            color: var(--text-primary);
+            border-left-color: var(--accent-color);
         }
 
         a:focus-visible, button:focus-visible {
@@ -197,6 +216,11 @@
             transition: color 0.3s ease, transform 0.3s ease;
         }
 
+        .side-nav #theme-toggle {
+            margin: 1rem 0 0 0.9rem;
+            padding: 0;
+        }
+
         #theme-toggle:hover {
             color: var(--accent-color);
             transform: rotate(-15deg);
@@ -214,53 +238,31 @@
             display: none;
         }
 
-        nav a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background-color: var(--accent-color);
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: scaleX(0);
-            }
-            to {
-                transform: scaleX(1);
-            }
-        }
-
         .section {
-            display: none;
-            animation: fadeIn 0.4s ease;
-            margin-bottom: 0.7rem;
+            scroll-margin-top: 2rem;
         }
 
-        .section.active {
-            display: block;
+        .section + .section {
+            margin-top: 4.5rem;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        h2 {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 1.2rem;
+        .section-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 2.2rem;
             font-weight: 300;
-            color: var(--text-primary);
+            line-height: 1.2;
+            letter-spacing: -0.03em;
+            text-transform: lowercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .subsection-label {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin: 1.8rem 0 0.4rem;
         }
 
         h3 {
@@ -278,147 +280,119 @@
             text-align: justify;
         }
 
-        .publication {
-            line-height: 1.2;
-            background-color: var(--surface);
-            padding: 0.7rem 1.3rem 0.5rem 1rem;
-            margin-bottom: 0.4rem;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
+        /* Publications and CV share one entry style: the title with its date
+           aligned right, details underneath, hairlines between entries */
+        .entry {
             position: relative;
-            overflow: hidden;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            column-gap: 1.5rem;
+            padding: 0.9rem 1rem;
+            margin: 0 -1rem;
+            border-radius: 12px;
+            transition: background-color 0.2s ease;
         }
 
-        .publication::before {
+        .entry + .entry::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 102, 204, 0.1), transparent);
-            transition: none; /* snap back instantly so the glow never sweeps in reverse */
+            left: 1rem;
+            right: 1rem;
+            height: 1px;
+            background: var(--border);
         }
 
-        .publication:hover::before {
-            left: 100%;
-            transition: left 0.5s ease;
+        .entry:hover {
+            background-color: var(--surface);
         }
 
-        .publication:hover {
-            transform: translateY(-2px);
+        .entry-title {
+            font-size: 1.02rem;
+            font-weight: 400;
+            line-height: 1.4;
+            color: var(--text-primary);
+            transition: color 0.2s ease;
         }
 
-        .publication[onclick] {
+        .entry-date {
+            grid-column: 2;
+            grid-row: 1;
+            padding-top: 0.12rem;
+            font-size: 0.82rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .entry-meta {
+            grid-column: 1 / -1;
+            margin-top: 0.25rem;
+            font-size: 0.9rem;
+            font-weight: 300;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        .entry-venue-row {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            margin-top: 0.3rem;
+        }
+
+        .entry-venue {
+            font-size: 0.85rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--accent-color);
+        }
+
+        .entry-note {
+            font-size: 0.8rem;
+            font-weight: 200;
+            font-style: italic;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .entry.is-link {
             cursor: pointer;
         }
 
-        .publication[onclick]:hover {
-            transform: translateY(-3px);
-        }
-
-        .publication-title {
-            font-family: 'Inter', sans-serif;
-            font-weight: 300;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .publication-authors {
-            font-family: 'Inter', sans-serif;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            font-weight: 200;
-            margin-bottom: 0.5rem;
-        }
-
-        .publication-venue {
+        /* Out of flow, so the hidden arrow never wraps onto a line of its own */
+        .entry.is-link .entry-title::after {
+            content: '\2197';
+            position: absolute;
+            margin-left: 0.3em;
             color: var(--accent-color);
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
-            font-weight: 200;
-            letter-spacing: 0.00em;
-            font-style: italic;
-            font-family: 'Inter', sans-serif;
+            opacity: 0;
+            transition: opacity 0.2s ease;
         }
 
-        .publication-links {
-            margin-top: 1rem;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .publication-links a {
+        .entry.is-link:hover .entry-title {
             color: var(--accent-color);
-            text-decoration: none;
-            font-size: 0.85rem;
-            padding: 0.35rem 1rem;
-            border: 1px solid var(--accent-color);
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 500;
-            font-family: 'Inter', sans-serif;
         }
 
-        .publication-links a:hover {
-            background-color: var(--accent-color);
-            color: var(--background);
-            transform: translateY(-1px);
-        }
-
-        .cv-section {
-            margin-bottom: 0.7rem;
-        }
-
-        .cv-item {
-            margin-bottom: 0.4rem;
-            padding-left: 1rem;
-            border-left: 3px solid var(--accent-color);
-            transition: border-color 0.3s ease;
-        }
-
-        .cv-item:hover {
-            border-left-color: var(--text-primary);
-        }
-
-        .cv-date {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 0.25rem;
-            font-weight: 200;
-            letter-spacing: 0.03em;
-        }
-
-        .cv-title {
-            font-family: 'Inter', sans-serif;
-            font-weight: 200;
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .cv-location {
-            color: var(--text-secondary);
-            font-weight: 200;
-            font-style: italic;
+        .entry.is-link:hover .entry-title::after {
+            opacity: 1;
         }
 
         .profile-section {
             display: flex;
-            gap: 1.2rem;
+            gap: 2rem;
             align-items: center;
-            margin-bottom: 0.7rem;
         }
 
         /* Rounded square; the corner radius scales with the photo and echoes
            the card's rounded corners */
         .profile-image {
             flex-shrink: 0;
-            width: 220px;
-            height: 220px;
+            width: 280px;
+            height: 280px;
             position: relative;
             cursor: pointer;
             border-radius: 9%;
@@ -473,6 +447,10 @@
             flex: 1;
             font-family: 'Inter', sans-serif;
             font-size: 1rem;
+        }
+
+        .profile-content p {
+            text-align: left;
         }
 
         .profile-content p:last-child {
@@ -575,86 +553,93 @@
             margin-bottom: 0.5rem;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 0.7rem 0.7rem 0.3rem 0.7rem;
+        @media (max-width: 900px) {
+            .page {
+                grid-template-columns: minmax(0, 1fr);
+                padding: 0 0.75rem 2rem;
             }
-            header {
-                margin-bottom: 0.7rem;
-                padding-bottom: 0.3rem;
+            .container {
+                grid-row: 2;
+                padding: 1.75rem 1.25rem 2rem;
+            }
+            /* The nav becomes a sticky bar across the top */
+            .side-nav {
+                grid-column: 1;
+                grid-row: 1;
+                top: 0;
+                flex-direction: row;
+                align-items: center;
+                gap: 1.1rem;
+                margin: 0 -0.75rem 0.75rem;
+                padding: 0.75rem 1.5rem;
+                background: var(--nav-bar-background);
+                backdrop-filter: blur(12px) saturate(120%);
+                -webkit-backdrop-filter: blur(12px) saturate(120%);
+                border-bottom: 1px solid var(--border);
+            }
+            .side-nav a {
+                padding: 0 0 0.15rem;
+                border-left: 0;
+                border-bottom: 2px solid transparent;
+                font-size: 1.1rem;
+            }
+            .side-nav a.active {
+                border-bottom-color: var(--accent-color);
+            }
+            .side-nav #theme-toggle {
+                margin: 0 0 0 auto;
+            }
+            /* "curriculum vitae" becomes "cv" */
+            .side-nav a[href="#cv"] {
+                font-size: 0;
+            }
+            .side-nav a[href="#cv"]::before {
+                content: "cv";
+                font-size: 1.1rem;
+                font-weight: 300;
+                font-family: 'Raleway', sans-serif;
             }
             .section {
-                margin-bottom: 0.3rem;
+                scroll-margin-top: 4.5rem;
             }
-            .publication {
-                margin-bottom: 0.2rem;
-                padding-bottom: 0.2rem;
+            .section + .section {
+                margin-top: 3rem;
             }
-            .cv-section {
-                margin-bottom: 0.3rem;
-            }
-            .cv-item {
-                margin-bottom: 0.2rem;
-            }
-            .blog-post {
-                margin-bottom: 0.3rem;
-                padding-bottom: 0.3rem;
+            h1 {
+                font-size: 2.6rem;
+                margin-bottom: 1.25rem;
+                text-align: center;
             }
             .profile-section {
                 flex-direction: column;
-                align-items: center;
-                text-align: center;
-                gap: 0.7rem;
-                margin-bottom: 0.3rem;
+                gap: 1.2rem;
             }
             .profile-image {
-                width: 100px;
-                height: 100px;
-                margin-bottom: 0.7rem;
+                width: 200px;
+                height: 200px;
             }
-            h1 {
-                font-size: 2.5rem;
+            .profile-content p {
+                text-align: center;
             }
-            h2 {
-                font-size: 1rem;
+            .profile-contact {
+                justify-content: center;
             }
-            nav {
-                gap: 0.7rem;
+            .section-title {
+                font-size: 1.8rem;
             }
-            .publication-links {
+            .entry {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .entry-date {
+                grid-column: 1;
+                grid-row: auto;
+                padding-top: 0;
+                margin-top: 0.15rem;
+            }
+            .entry-venue-row {
                 flex-wrap: wrap;
+                gap: 0.25rem 1rem;
             }
-            /* Change "curriculum_vitae" to "cv" on mobile */
-            nav a[href="#cv"] {
-                font-size: 0;
-            }
-            nav a[href="#cv"]::before {
-                content: "cv";
-                font-size: 1.25rem;
-                font-weight: 300;
-                letter-spacing: -0.0em;
-                font-family: 'Raleway', sans-serif;
-            }
-        }
-
-        .publication-venue-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            gap: 1rem;
-        }
-        .publication-equal-note {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 200;
-            color: var(--text-secondary);
-            font-style: italic;
-            margin-top: 0;
-            white-space: nowrap;
-        }
-
-        #publications-list {
-            transition: opacity 0.3s ease;
         }
 
         .flock-hint {
@@ -688,245 +673,242 @@
 <body>
     <canvas id="particles-canvas"></canvas>
     
-    <div class="container">
-        <header>
-            <h1>Luca Baroni</h1>
-            <!-- <p class="subtitle">Computational Neuroscience & AI Safety</p> -->
-            <nav>
-                <a href="#about" class="nav-link active">about</a>
-                <a href="#publications" class="nav-link">publications</a>
-                <a href="#cv" class="nav-link">curriculum vitae</a>
-                <!-- <a href="#thoughts" class="nav-link">Thoughts</a> -->
-                <button id="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
-                    <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="12" cy="12" r="4.5"></circle>
-                        <line x1="12" y1="1.5" x2="12" y2="3.5"></line>
-                        <line x1="12" y1="20.5" x2="12" y2="22.5"></line>
-                        <line x1="4.6" y1="4.6" x2="6" y2="6"></line>
-                        <line x1="18" y1="18" x2="19.4" y2="19.4"></line>
-                        <line x1="1.5" y1="12" x2="3.5" y2="12"></line>
-                        <line x1="20.5" y1="12" x2="22.5" y2="12"></line>
-                        <line x1="4.6" y1="19.4" x2="6" y2="18"></line>
-                        <line x1="18" y1="6" x2="19.4" y2="4.6"></line>
-                    </svg>
-                </button>
-            </nav>
-        </header>
+    <div class="page">
+        <nav class="side-nav" aria-label="Sections">
+            <a href="#about" class="nav-link active">about</a>
+            <a href="#publications" class="nav-link">publications</a>
+            <a href="#cv" class="nav-link">curriculum vitae</a>
+            <!-- <a href="#thoughts" class="nav-link">Thoughts</a> -->
+            <button id="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
+                <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4.5"></circle>
+                    <line x1="12" y1="1.5" x2="12" y2="3.5"></line>
+                    <line x1="12" y1="20.5" x2="12" y2="22.5"></line>
+                    <line x1="4.6" y1="4.6" x2="6" y2="6"></line>
+                    <line x1="18" y1="18" x2="19.4" y2="19.4"></line>
+                    <line x1="1.5" y1="12" x2="3.5" y2="12"></line>
+                    <line x1="20.5" y1="12" x2="22.5" y2="12"></line>
+                    <line x1="4.6" y1="19.4" x2="6" y2="18"></line>
+                    <line x1="18" y1="6" x2="19.4" y2="4.6"></line>
+                </svg>
+            </button>
+        </nav>
 
-        <main>
-            <section id="about" class="section active">
-                <!-- <h2>About me</h2> -->
-                <div class="profile-section">
-                    <div class="profile-image" id="profile-photo" role="button" tabindex="0" aria-label="Photo of Luca Baroni">
-                        <img src="profile.jpg" alt="Luca Baroni" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="profile-placeholder" style="display:none;">LB</div>
-                        <canvas class="profile-canvas" id="profile-canvas" aria-hidden="true"></canvas>
-                    </div>
-                    <div class="profile-content">
-                        <p style="font-size:1.5rem;">Hi, I'm Luca!</p>
-                        <p>I am an AI safety research scientist.</p>
-                        <p>Previously, I did a Ph.D. in computational neuroscience.</p>
-                        <div class="profile-contact">
-                            <a class="contact-pill" id="email-link" data-user="luca" data-domain="lucabaroni.com">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>
-                                luca[at]lucabaroni.com
-                            </a>
-                            <span class="contact-pill">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>
-                                London, UK
-                            </span>
-                            <a class="contact-pill" href="https://github.com/lucabaroni" target="_blank" rel="noopener">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"></path></svg>
-                                GitHub
-                            </a>
-                            <a class="contact-pill" href="https://www.linkedin.com/in/luca-baroni-261161157" target="_blank" rel="noopener">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                                LinkedIn
-                            </a>
+        <div class="container">
+            <main>
+                <section id="about" class="section">
+                    <h1>Luca Baroni</h1>
+                    <div class="profile-section">
+                        <div class="profile-image" id="profile-photo" role="button" tabindex="0" aria-label="Photo of Luca Baroni">
+                            <img src="profile.jpg" alt="Luca Baroni" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="profile-placeholder" style="display:none;">LB</div>
+                            <canvas class="profile-canvas" id="profile-canvas" aria-hidden="true"></canvas>
                         </div>
-                        <!-- <p>Some time ago, I was studying theoretical physics.</p> -->
-                        <!-- <p>I have a background in physics and I am completing a PhD in <strong>computational neuroscience</strong>, where I study the visual cortex and neurostimulation approaches for vision restoration in blind subjects.</p>
-                        <p>Alongside my PhD, I do research in <strong>technical AI safety</strong>. I am interested in model introspection, CoT unfaithfullness, and practical applications of mechanistic interpretability and model organisms.</p> -->
+                        <div class="profile-content">
+                            <p style="font-size:1.5rem;">Hi, I'm Luca!</p>
+                            <p>I am an AI safety research scientist.</p>
+                            <p>Previously, I did a Ph.D. in computational neuroscience.</p>
+                            <div class="profile-contact">
+                                <a class="contact-pill" id="email-link" data-user="luca" data-domain="lucabaroni.com">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>
+                                    luca[at]lucabaroni.com
+                                </a>
+                                <span class="contact-pill">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>
+                                    London, UK
+                                </span>
+                                <a class="contact-pill" href="https://github.com/lucabaroni" target="_blank" rel="noopener">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"></path></svg>
+                                    GitHub
+                                </a>
+                                <a class="contact-pill" href="https://www.linkedin.com/in/luca-baroni-261161157" target="_blank" rel="noopener">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                    LinkedIn
+                                </a>
+                            </div>
+                            <!-- <p>Some time ago, I was studying theoretical physics.</p> -->
+                            <!-- <p>I have a background in physics and I am completing a PhD in <strong>computational neuroscience</strong>, where I study the visual cortex and neurostimulation approaches for vision restoration in blind subjects.</p>
+                            <p>Alongside my PhD, I do research in <strong>technical AI safety</strong>. I am interested in model introspection, CoT unfaithfullness, and practical applications of mechanistic interpretability and model organisms.</p> -->
+                        </div>
                     </div>
+                </section>
+
+                <section id="publications" class="section">
+                    <h2 class="section-title">publications</h2>
+                    <div id="publications-list">
+                        <div style="text-align: center; color: var(--text-secondary); padding: 2rem; opacity: 0.7;">
+                            Loading publications...
+                        </div>
+                    </div>
+                </section>
+
+                <section id="cv" class="section">
+                    <h2 class="section-title">curriculum vitae</h2>
+
+                    <div class="cv-section">
+                        <h3 class="subsection-label">Education</h3>
+                        <div class="entry">
+                            <div class="entry-title">PhD in Computational Neuroscience</div>
+                            <div class="entry-date">2020 &ndash; 2026</div>
+                            <div class="entry-meta">Charles University, Prague &middot; Supervisor: Ján Antolík</div>
+                        </div>
+                        <div class="entry">
+                            <div class="entry-title">MSc in Theoretical Physics</div>
+                            <div class="entry-date">2017 &ndash; 2020</div>
+                            <div class="entry-meta">University of Milan - Bicocca &middot; Graduated with honors</div>
+                        </div>
+                        <div class="entry">
+                            <div class="entry-title">BSc in Physics</div>
+                            <div class="entry-date">2014 &ndash; 2017</div>
+                            <div class="entry-meta">University of Milan - Bicocca &middot; Graduated with honors</div>
+                        </div>
                     </div>
 
-            </section>
-
-            <section id="publications" class="section">
-                <h2>Peer-reviewed articles</h2>
-                <div id="publications-list">
-                    <div style="text-align: center; color: var(--text-secondary); padding: 2rem; opacity: 0.7;">
-                        Loading publications...
+                    <div class="cv-section">
+                        <h3 class="subsection-label">Work / research experience</h3>
+                        <div class="entry">
+                            <div class="entry-title">Research Scientist</div>
+                            <div class="entry-date">Oct 2026 &ndash; present</div>
+                            <div class="entry-meta">Meridian, Cambridge &middot; Advisors: Ed Young, Puria Radmard (Geodesic)</div>
+                        </div>
+                        <div class="entry">
+                            <div class="entry-title">ERA AI Safety Fellow</div>
+                            <div class="entry-date">Jul 2026 &ndash; Sep 2026</div>
+                            <div class="entry-meta">AI Safety Research fellowship, Cambridge &middot; Mentor: Alan Cooney</div>
+                        </div>
+                        <div class="entry">
+                            <div class="entry-title">Meridian Visiting Researcher</div>
+                            <div class="entry-date">Jan 2026 &ndash; Jun 2026</div>
+                            <div class="entry-meta">Independent AI safety researcher on sleeper agents, @Meridian, Cambridge</div>
+                        </div>
+                        <div class="entry">
+                            <div class="entry-title">MARS 4.0 scholar</div>
+                            <div class="entry-date">Dec 2025 &ndash; Feb 2026</div>
+                            <div class="entry-meta">AI Safety Research program, Cambridge/Remote &middot; Mentors: Puria Radmard, Shi Feng, Kola Ayonrinde</div>
+                        </div>
+                        <div class="entry">
+                            <div class="entry-title">ARENA 6.0 scholar</div>
+                            <div class="entry-date">Sep 2025 &ndash; Oct 2025</div>
+                            <div class="entry-meta">Technical AI Safety Research upskilling program, London</div>
+                        </div>
+                        <div class="entry">
+                            <div class="entry-title">SPAR scholar</div>
+                            <div class="entry-date">Feb 2025 &ndash; May 2025</div>
+                            <div class="entry-meta">AI Safety Research program, Remote &middot; Mentor: Stefan Heimersheim</div>
+                        </div>
+                        <div class="entry">
+                            <div class="entry-title">PhD Research Secondment</div>
+                            <div class="entry-date">Sep 2022 &ndash; Oct 2022</div>
+                            <div class="entry-meta">Femtonics, Budapest</div>
+                        </div>
+                        <div class="entry">
+                            <div class="entry-title">PhD Research Secondment</div>
+                            <div class="entry-date">Mar 2022 &ndash; Jun 2022</div>
+                            <div class="entry-meta">Neuronal Intelligence Lab, Göttingen &middot; Supervisor: Fabian H. Sinz</div>
+                        </div>
+                        <div class="entry">
+                            <div class="entry-title">MSc thesis research internship</div>
+                            <div class="entry-date">Oct 2019 &ndash; Apr 2020</div>
+                            <div class="entry-meta">LIPh (Laboratory of Interdisciplinary Physics), Padua</div>
+                        </div>
                     </div>
-                </div>
-            </section>
 
-            <section id="cv" class="section">
+                    <!-- <div class="cv-section">
+                        <h3 class="subsection-label">Selected talks</h3>
+                        <div class="entry">
+                            <div class="entry-title">Learning and aligning single neuron invariance manifolds in visual neurons</div>
+                            <div class="entry-date">2025</div>
+                            <div class="entry-meta">ICLR 2025 (Oral Presentation)</div>
+                        </div>
+                        <div class="entry">
+                            <div class="entry-title">Learning invariance manifolds of visual sensory neurons</div>
+                            <div class="entry-date">2023</div>
+                            <div class="entry-meta">46th Annual Conference of Japanese Neuroscience Society &middot; Selected speaker</div>
+                        </div>
+                        <div class="entry">
+                            <div class="entry-title">Invariances in primary visual cortex</div>
+                            <div class="entry-date">2022</div>
+                            <div class="entry-meta">Workshop on Physics of Data, Venice &middot; Invited speaker</div>
+                        </div>
+                    </div>
+
+                    <div class="cv-section">
+                        <h3 class="subsection-label">Fellowship</h3>
+                        <div class="entry">
+                            <div class="entry-title">Marie Skłodowska-Curie Actions ITN Fellowship</div>
+                            <div class="entry-meta">enTRAIN Vision</div>
+                        </div>
+                    </div> -->
+                </section>
+
+                <!-- <section id="thoughts" class="section">
+                    <h2>Personal Thoughts</h2>
                 
-                
-                <div class="cv-section">
-                    <h2>Education</h2>
-                    <div class="cv-item">
-                        <div class="cv-title">PhD in Computational Neuroscience</div>
-                        <div class="cv-location">Charles University, Prague | Supervisor: Ján Antolík</div>
-                        <div class="cv-date">2020 - 2026</div>
+                    <div class="blog-post">
+                        <div class="blog-date">March 15, 2024</div>
+                        <a href="#" class="blog-title">The Convergence of Neuroscience and AI Safety</a>
+                        <p class="blog-excerpt">Recent advances in understanding neural computation are providing crucial insights for building safer AI systems. In this post, I explore how principles from neuroscience can inform alignment research...</p>
                     </div>
-                    <div class="cv-item">
-                        <div class="cv-title">MSc in Theoretical Physics</div>
-                        <div class="cv-location">University of Milan - Bicocca | Graduated with honors</div>
-                        <div class="cv-date">2017 - 2020</div>
-                    </div>
-                    <div class="cv-item">
-                        <div class="cv-title">BSc in Physics</div>
-                        <div class="cv-location">University of Milan - Bicocca | Graduated with honors</div>
-                        <div class="cv-date">2014 - 2017</div>
-                    </div>
-                </div>
 
-                <div class="cv-section">
-                    <h2>Work/Research experience</h2>
-                    <div class="cv-item">
-                        <div class="cv-title">Research Scientist</div>
-                        <div class="cv-location">Meridian, Cambridge | Advisors: Ed Young, Puria Radmard (Geodesic)</div>
-                        <div class="cv-date">October 2026 - present</div>
+                    <div class="blog-post">
+                        <div class="blog-date">February 1, 2024</div>
+                        <a href="#" class="blog-title">Interpretability Through the Lens of Biology</a>
+                        <p class="blog-excerpt">What can we learn about neural network interpretability from biological neural systems? This post examines parallels between neuroscience methods and AI interpretability research...</p>
                     </div>
-                    <div class="cv-item">
-                        <div class="cv-title">ERA AI Safety Fellow</div>
-                        <div class="cv-location">AI Safety Research fellowship, Cambridge | Mentor: Alan Cooney</div>
-                        <div class="cv-date">July 2026 - September 2026</div>
-                    </div>
-                    <div class="cv-item">
-                        <div class="cv-title">Meridian Visiting Researcher</div>
-                        <div class="cv-location">Independent AI safety researcher on sleeper agents, @Meridian, Cambridge </div>
-                        <div class="cv-date">January 2026 - June 2026</div>
-                    </div>
-                    <div class="cv-item">
-                        <div class="cv-title">MARS 4.0 scholar</div>
-                        <div class="cv-location">AI Safety Research program, Cambridge/Remote | Mentors: Puria Radmard, Shi Feng, Kola Ayonrinde </div>
-                        <div class="cv-date">December 2025 - February 2026</div>
-                    </div>
-                    <div class="cv-item">
-                        <div class="cv-title">ARENA 6.0 scholar</div>
-                        <div class="cv-location">Technical AI Safety Research upskilling program, London</div>
-                        <div class="cv-date">September 2025 - October 2025</div>
-                    </div>
-                    <div class="cv-item">
-                        <div class="cv-title">SPAR scholar</div>
-                        <div class="cv-location">AI Safety Research program, Remote | Mentor: Stefan Heimersheim  </div>
-                        <div class="cv-date">February 2025 - May 2025</div>
-                    </div>
-                    <div class="cv-item">
-                        <div class="cv-title">PhD Research Secondment</div>
-                        <div class="cv-location">Femtonics, Budapest</div>
-                        <div class="cv-date">September 2022 - October 2022</div>
-                    </div>
-                    <div class="cv-item">
-                        <div class="cv-title">PhD Research Secondment</div>
-                        <div class="cv-location">Neuronal Intelligence Lab, Göttingen / Supervisor: Fabian H. Sinz</div>
-                        <div class="cv-date">March 2022 - June 2022</div>
-                    </div>
-                    <div class="cv-item">
-                        <div class="cv-title"> MSc thesis research internship</div>
-                        <div class="cv-location">LIPh (Laboratory of Interdisciplinary Physics), Padua</div>
-                        <div class="cv-date">October 2019 - April 2020</div>
-                    </div>
-                </div>
 
-                <!-- <div class="cv-section">
-                    <h3>Selected Talks</h3>
-                    <div class="cv-item">
-                        <div class="cv-title">Learning and aligning single neuron invariance manifolds in visual neurons</div>
-                        <div class="cv-location">ICLR 2025 (Oral Presentation)</div>
-                        <div class="cv-date">2025</div>
+                    <div class="blog-post">
+                        <div class="blog-date">December 10, 2023</div>
+                        <a href="#" class="blog-title">Reflections on My PhD Journey</a>
+                        <p class="blog-excerpt">As I near the completion of my doctoral studies, I wanted to share some thoughts on the research process, challenges faced, and lessons learned along the way...</p>
                     </div>
-                    <div class="cv-item">
-                        <div class="cv-title">Learning invariance manifolds of visual sensory neurons</div>
-                        <div class="cv-location">46th Annual Conference of Japanese Neuroscience Society | Selected speaker</div>
-                        <div class="cv-date">2023</div>
-                    </div>
-                    <div class="cv-item">
-                       
-                        <div class="cv-title">Invariances in primary visual cortex</div>
-                        <div class="cv-location">Workshop on Physics of Data, Venice | Invited speaker</div> 
-                        <div class="cv-date">2022</div>
-                    </div>
-                </div>
+                </section> -->
 
-                <div class="cv-section">
-                    <h3>Fellowship</h3>
-                    <div class="cv-item">
-                        <div class="cv-title">Marie Skłodowska-Curie Actions ITN Fellowship</div>
-                        <div class="cv-location">enTRAIN Vision</div>
-                    </div>
-                </div> -->
-            </section>
-
-            <!-- <section id="thoughts" class="section">
-                <h2>Personal Thoughts</h2>
-                
-                <div class="blog-post">
-                    <div class="blog-date">March 15, 2024</div>
-                    <a href="#" class="blog-title">The Convergence of Neuroscience and AI Safety</a>
-                    <p class="blog-excerpt">Recent advances in understanding neural computation are providing crucial insights for building safer AI systems. In this post, I explore how principles from neuroscience can inform alignment research...</p>
-                </div>
-
-                <div class="blog-post">
-                    <div class="blog-date">February 1, 2024</div>
-                    <a href="#" class="blog-title">Interpretability Through the Lens of Biology</a>
-                    <p class="blog-excerpt">What can we learn about neural network interpretability from biological neural systems? This post examines parallels between neuroscience methods and AI interpretability research...</p>
-                </div>
-
-                <div class="blog-post">
-                    <div class="blog-date">December 10, 2023</div>
-                    <a href="#" class="blog-title">Reflections on My PhD Journey</a>
-                    <p class="blog-excerpt">As I near the completion of my doctoral studies, I wanted to share some thoughts on the research process, challenges faced, and lessons learned along the way...</p>
-                </div>
-            </section> -->
-
-        </main>
+            </main>
+        </div>
     </div>
 
     <div class="flock-hint">the birds avoid your cursor &mdash; click anywhere to call them</div>
 
     <script>
-        // Navigation functionality
+        // Navigation: all sections sit on one scrolling page. The side nav
+        // scrolls to a section and highlights whichever one is in view
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('.section');
-        let publicationsLoaded = false;
+        const scrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
 
-        function showSection(targetId) {
-            navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + targetId));
-
-            sections.forEach(section => {
-                section.classList.remove('active');
-                if (section.id === targetId) {
-                    section.classList.add('active');
-
-                    if (targetId === 'publications' && !publicationsLoaded) {
-                        publicationsLoaded = true;
-                        loadPublications();
-                    }
-                }
-            });
+        function setActiveLink(id) {
+            navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
         }
 
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = link.getAttribute('href').substring(1);
-                showSection(targetId);
+                document.getElementById(targetId).scrollIntoView({ behavior: scrollBehavior });
                 history.replaceState(null, '', '#' + targetId);
             });
         });
 
-        // Deep linking: open the section named in the URL hash, if any
-        const initialHash = window.location.hash.substring(1);
-        if (initialHash && document.getElementById(initialHash)?.classList.contains('section')) {
-            showSection(initialHash);
+        // The active section is the last one whose top has passed a line a
+        // third of the way down the screen, or the last one at the page bottom
+        function updateActiveLink() {
+            const line = window.innerHeight / 3;
+            let current = sections[0].id;
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= line) current = section.id;
+            });
+            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+                current = sections[sections.length - 1].id;
+            }
+            setActiveLink(current);
         }
+        window.addEventListener('scroll', updateActiveLink, { passive: true });
+        window.addEventListener('resize', updateActiveLink);
+        window.addEventListener('load', updateActiveLink); // after the browser's own jump to a #hash
+        updateActiveLink();
 
         // The email is written obfuscated in the HTML; the mailto link is
         // assembled here so scrapers reading the static page don't get it
@@ -1219,18 +1201,18 @@
             else img.addEventListener('load', upload, { once: true });
         })();
 
-        // Preload publications in the background so the tab opens instantly
-        function preloadPublications() {
-            if (!publicationsLoaded) {
-                publicationsLoaded = true;
-                loadPublications();
-            }
-        }
-        if (window.requestIdleCallback) {
-            requestIdleCallback(preloadPublications, { timeout: 2000 });
-        } else {
-            setTimeout(preloadPublications, 2000);
-        }
+        // Publications render on the page itself, so load them right away.
+        // They push the sections below them down when they arrive, so a deep
+        // link (e.g. #cv) is scrolled to again unless the visitor has moved
+        const initialHash = window.location.hash.substring(1);
+        let visitorScrolled = false;
+        ['wheel', 'touchstart', 'keydown'].forEach(type =>
+            window.addEventListener(type, () => { visitorScrolled = true; }, { once: true, passive: true }));
+        loadPublications().then(() => {
+            const target = initialHash ? document.getElementById(initialHash) : null;
+            if (!visitorScrolled && target?.classList.contains('section')) target.scrollIntoView();
+            updateActiveLink();
+        });
 
         // Theme toggle: manual choice is persisted; otherwise follow the system.
         // The sun/moon icons swap via CSS based on the data-theme attribute.
@@ -1697,13 +1679,16 @@
             let html = '';
             
             // Render published papers
-            published.forEach(pub => {
-                html += renderPublication(pub);
-            });
+            if (published.length > 0) {
+                html += '<h3 class="subsection-label">Peer-reviewed articles</h3>';
+                published.forEach(pub => {
+                    html += renderPublication(pub);
+                });
+            }
             
             // Add preprints section if any exist
             if (preprints.length > 0) {
-                html += '<h2 style="margin-top: 1rem;">Preprints</h2>';
+                html += '<h3 class="subsection-label">Preprints</h3>';
                 preprints.forEach(pub => {
                     html += renderPublication(pub);
                 });
@@ -1899,22 +1884,24 @@
             // Venue and equal contribution note in a flex row
             let venueRow = '';
             if (venue || equalContributors.length > 0) {
-                venueRow = `<div class="publication-venue-row">
-                    ${venue ? `<div class=\"publication-venue\">${venue}</div>` : ''}
-                    ${equalContributors.length > 0 ? `<div class=\"publication-equal-note\">*equal contribution</div>` : ''}
+                venueRow = `<div class="entry-venue-row">
+                    ${venue ? `<div class=\"entry-venue\">${venue}</div>` : ''}
+                    ${equalContributors.length > 0 ? `<div class=\"entry-note\">*equal contribution</div>` : ''}
                 </div>`;
             }
             
+            // Same entry layout as the CV, with the year aligned right
             return `
-                <div class="publication" ${clickableAttributes}>
-                    <div class="publication-title">${title}</div>
-                    <div class="publication-authors">${authors}</div>
+                <div class="entry${mainUrl ? ' is-link' : ''}" ${clickableAttributes}>
+                    <div class="entry-title">${title}</div>
+                    ${pub.year ? `<div class="entry-date">${pub.year}</div>` : ''}
+                    <div class="entry-meta">${authors}</div>
                     ${venueRow}
                 </div>
             `;
         }
 
-        // Get venue information
+        // Get venue information (without the year, which is shown separately)
         function getVenue(pub) {
             let venue = '';
             
@@ -1922,19 +1909,17 @@
             // Note: field names are converted to lowercase by the parser
             if (pub.journal?.toLowerCase().includes('arxiv') || 
                 (pub.eprint && (pub.archiveprefix?.toLowerCase() === 'arxiv' || pub.archivePrefix?.toLowerCase() === 'arxiv'))) {
-                venue = `arXiv preprint${pub.year ? `, ${pub.year}` : ''}`;
+                venue = 'arXiv preprint';
             } else if (pub.journal?.toLowerCase().includes('biorxiv') || pub.publisher?.toLowerCase().includes('biorxiv')) {
-                venue = `bioRxiv preprint${pub.year ? `, ${pub.year}` : ''}`;
+                venue = 'bioRxiv preprint';
             } else if (pub.journal?.toLowerCase() === 'preprint') {
-                venue = `Preprint${pub.year ? `, ${pub.year}` : ''}`;
+                venue = 'Preprint';
             } else if (pub.journal) {
-                venue = `${pub.journal}${pub.year ? `, ${pub.year}` : ''}`;
+                venue = pub.journal;
             } else if (pub.booktitle) {
-                venue = `${pub.booktitle}${pub.year ? `, ${pub.year}` : ''}`;
+                venue = pub.booktitle;
             } else if (pub.school) {
-                venue = `${pub.school}${pub.year ? `, ${pub.year}` : ''}`;
-            } else {
-                venue = pub.year || '';
+                venue = pub.school;
             }
             
             // Add presentation type if available (but not for preprints since they don't have presentations)
@@ -1957,7 +1942,6 @@
             return null;
         }
 
-        // Publications will be loaded when the Publications tab is clicked for the first time
     </script>
 </body>
 </html>
