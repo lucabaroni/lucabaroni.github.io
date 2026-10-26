@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>Luca Baroni - AI Safety Research Scientist</title>
-    <meta name="description" content="Luca Baroni, AI safety research scientist at Meridian working on alignment and model organisms of language models. PhD in computational neuroscience from Charles University.">
+    <meta name="description" content="Luca Baroni, AI safety research scientist working on alignment and model organisms of language models. PhD in computational neuroscience from Charles University.">
     <meta name="keywords" content="AI safety, alignment, model organisms, language models, LLM interpretability, computational neuroscience">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lucabaroni.com/">
     <meta property="og:title" content="Luca Baroni - AI Safety Research Scientist">
-    <meta property="og:description" content="AI safety research scientist at Meridian working on alignment and model organisms of language models. PhD in computational neuroscience.">
+    <meta property="og:description" content="AI safety research scientist working on alignment and model organisms of language models. PhD in computational neuroscience.">
     <meta property="og:image" content="https://lucabaroni.com/profile.jpg">
     <meta name="twitter:card" content="summary">
 
@@ -413,32 +413,16 @@
             margin-bottom: 0.7rem;
         }
 
-        /* Hexagonal frame: the rim is the padded background showing through the
-           clip-path, since a regular border would be cut away by the clip */
+        /* Rounded square; the corner radius scales with the photo and echoes
+           the card's rounded corners */
         .profile-image {
             flex-shrink: 0;
             width: 220px;
             height: 220px;
-            padding: 3px;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            background: rgba(0, 0, 0, 0.25);
-            transition: all 0.3s ease;
             position: relative;
             cursor: pointer;
-        }
-
-        html[data-theme="dark"] .profile-image {
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .profile-image:hover {
-            background: var(--accent-color);
-            transform: scale(1.02);
-        }
-
-        .profile-image img,
-        .profile-image .profile-placeholder {
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            border-radius: 9%;
+            overflow: hidden;
         }
 
         .profile-image img {
@@ -446,6 +430,22 @@
             height: 100%;
             object-fit: cover;
             display: block;
+        }
+
+        /* WebGL heat-map tiles drawn over the photo; hidden until the first
+           frame renders, so the plain photo is the fallback */
+        .profile-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+
+        .profile-canvas.ready {
+            opacity: 1;
         }
 
         /* Images aren't selectable or draggable, so stray double clicks
@@ -524,96 +524,45 @@
             font-size: 0.95rem;
         }
 
-        .contact-info {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(8px) saturate(110%);
-            -webkit-backdrop-filter: blur(8px) saturate(110%);
-            padding: 1.2rem 1.2rem 0.6rem 1.2rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            padding-bottom: 0.6rem;
-            box-shadow: 
-                0 4px 16px rgba(0, 0, 0, 0.08),
-                0 1px 2px rgba(255, 255, 255, 0.1) inset;
-        }
-
-        html[data-theme="dark"] .contact-info {
-            background: rgba(26, 26, 26, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow:
-                0 4px 16px rgba(0, 0, 0, 0.25),
-                0 1px 2px rgba(255, 255, 255, 0.03) inset;
-        }
-
-        .contact-section {
+        /* Contact details as a row of quiet pills under the intro */
+        .profile-contact {
             display: flex;
-            gap: 1.2rem;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 1rem;
+        }
+
+        .contact-pill {
+            display: inline-flex;
             align-items: center;
-        }
-
-        /* Same hexagonal frame as the about page */
-        .contact-image {
-            flex-shrink: 0;
-            width: 200px;
-            height: 200px;
-            padding: 3px;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            background: rgba(0, 0, 0, 0.25);
-            transition: all 0.3s ease;
-        }
-
-        html[data-theme="dark"] .contact-image {
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .contact-image:hover {
-            background: var(--accent-color);
-            transform: scale(1.05);
-        }
-
-        .contact-image img,
-        .contact-image .contact-placeholder {
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-        }
-
-        .contact-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .contact-placeholder {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 600;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .contact-details {
-            flex: 1;
-        }
-
-        .contact-details p {
-            margin-bottom: 0.5rem;
-        }
-
-        .contact-info a {
-            color: var(--accent-color);
+            gap: 0.4rem;
+            padding: 0.28rem 0.75rem 0.28rem 0.6rem;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--surface);
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            line-height: 1.4;
             text-decoration: none;
-            transition: all 0.3s ease;
+            cursor: pointer;
+            transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
         }
 
-        .contact-info a:hover {
-            text-decoration: underline;
-            padding-left: 0.5rem;
+        .contact-pill svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+            opacity: 0.8;
+        }
+
+        a.contact-pill:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-1px);
+        }
+
+        span.contact-pill {
+            cursor: default;
         }
 
         ul {
@@ -651,17 +600,14 @@
                 margin-bottom: 0.3rem;
                 padding-bottom: 0.3rem;
             }
-            .contact-info {
-                padding-bottom: 0.3rem;
-            }
-            .profile-section, .contact-section {
+            .profile-section {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
                 gap: 0.7rem;
                 margin-bottom: 0.3rem;
             }
-            .profile-image, .contact-image {
+            .profile-image {
                 width: 100px;
                 height: 100px;
                 margin-bottom: 0.7rem;
@@ -751,7 +697,6 @@
                 <a href="#publications" class="nav-link">publications</a>
                 <a href="#cv" class="nav-link">curriculum vitae</a>
                 <!-- <a href="#thoughts" class="nav-link">Thoughts</a> -->
-                <a href="#contact" class="nav-link">contact</a>
                 <button id="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
                     <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -775,14 +720,33 @@
             <section id="about" class="section active">
                 <!-- <h2>About me</h2> -->
                 <div class="profile-section">
-                    <div class="profile-image" id="profile-photo" title="Get in touch" role="link" tabindex="0" aria-label="Go to contact page">
+                    <div class="profile-image" id="profile-photo" role="button" tabindex="0" aria-label="Photo of Luca Baroni">
                         <img src="profile.jpg" alt="Luca Baroni" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="profile-placeholder" style="display:none;">LB</div>
+                        <canvas class="profile-canvas" id="profile-canvas" aria-hidden="true"></canvas>
                     </div>
                     <div class="profile-content">
                         <p style="font-size:1.5rem;">Hi, I'm Luca!</p>
-                        <p>I am an AI safety research scientist at <strong>Meridian</strong>.</p>
+                        <p>I am an AI safety research scientist.</p>
                         <p>Previously, I did a Ph.D. in computational neuroscience.</p>
+                        <div class="profile-contact">
+                            <a class="contact-pill" id="email-link" data-user="luca" data-domain="lucabaroni.com">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>
+                                luca[at]lucabaroni.com
+                            </a>
+                            <span class="contact-pill">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>
+                                London, UK
+                            </span>
+                            <a class="contact-pill" href="https://github.com/lucabaroni" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"></path></svg>
+                                GitHub
+                            </a>
+                            <a class="contact-pill" href="https://www.linkedin.com/in/luca-baroni-261161157" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                LinkedIn
+                            </a>
+                        </div>
                         <!-- <p>Some time ago, I was studying theoretical physics.</p> -->
                         <!-- <p>I have a background in physics and I am completing a PhD in <strong>computational neuroscience</strong>, where I study the visual cortex and neurostimulation approaches for vision restoration in blind subjects.</p>
                         <p>Alongside my PhD, I do research in <strong>technical AI safety</strong>. I am interested in model introspection, CoT unfaithfullness, and practical applications of mechanistic interpretability and model organisms.</p> -->
@@ -826,7 +790,7 @@
                     <h2>Work/Research experience</h2>
                     <div class="cv-item">
                         <div class="cv-title">Research Scientist</div>
-                        <div class="cv-location">Independent AI safety project, @Meridian, Cambridge | Advisors: Ed Young, Puria Radmard (Geodesic)</div>
+                        <div class="cv-location">Meridian, Cambridge | Advisors: Ed Young, Puria Radmard (Geodesic)</div>
                         <div class="cv-date">October 2026 - present</div>
                     </div>
                     <div class="cv-item">
@@ -922,27 +886,6 @@
                 </div>
             </section> -->
 
-            <section id="contact" class="section">
-                <!-- <h2>Contact</h2> -->
-                <div class="contact-info">
-                    <div class="contact-section">
-                        <div class="contact-image">
-                            <!-- Replace src with your actual photo path -->
-                            <img src="profile.jpg" alt="Luca Baroni" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="contact-placeholder" style="display:none;">LB</div>
-                        </div>
-                        <div class="contact-details">
-
-                    <p><strong>Email:</strong> <a href="mailto:luca@lucabaroni.com">luca@lucabaroni.com</a></p>
-
-                    <p><strong>Location:</strong> Vienna, Austria</p>
-                    <p><strong>GitHub:</strong> <a href="https://github.com/lucabaroni" target="_blank" rel="noopener">github.com/lucabaroni</a></p>
-                    <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/luca-baroni-261161157" target="_blank" rel="noopener">linkedin.com/in/luca-baroni</a></p>
-                            <!-- <a href="https://github.com/yourusername">GitHub</a></p>  <a href="https://linkedin.com/in/yourusername">LinkedIn</a></p> -->
-                        </div>
-                    </div>
-                </div>
-            </section>
         </main>
     </div>
 
@@ -985,19 +928,296 @@
             showSection(initialHash);
         }
 
-        // Clicking the profile photo leads to the contact page
+        // The email is written obfuscated in the HTML; the mailto link is
+        // assembled here so scrapers reading the static page don't get it
+        const emailLink = document.getElementById('email-link');
+        emailLink.href = 'mailto:' + emailLink.dataset.user + '@' + emailLink.dataset.domain;
+
         const profilePhoto = document.getElementById('profile-photo');
-        function goToContact() {
-            showSection('contact');
-            history.replaceState(null, '', '#contact');
-        }
-        profilePhoto.addEventListener('click', goToContact);
-        profilePhoto.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                goToContact();
+
+        // Heat-map tile animation over the profile photo (after gpuworld.org's
+        // grid shader, ported from WebGPU to WebGL2). The photo is cut into a
+        // 5x5 grid and the original heat pattern is screened softly over it:
+        // dark waves sweep each tile with a delay that propagates from the
+        // top-left corner, or from the cursor on hover. Clicking sends a thin
+        // ripple of heat through the grid from the click point.
+        (function initProfileHeat() {
+            const canvas = document.getElementById('profile-canvas');
+            const img = profilePhoto.querySelector('img');
+            const gl = canvas.getContext('webgl2', { premultipliedAlpha: false, antialias: false });
+            if (!gl) return;
+
+            const PALETTE = ['#000000', '#11206a', '#1f3ba2', '#2f63e7', '#00d5ff', '#fff34a', '#ff991e', '#ff4c00'];
+            const paletteData = new Float32Array(PALETTE.flatMap(hex => {
+                const n = parseInt(hex.slice(1), 16);
+                return [(n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255];
+            }));
+
+            const vertexSrc = `#version 300 es
+                out vec2 vUv;
+                void main() {
+                    // Full-screen triangle; uv origin at the top-left
+                    vec2 p = vec2(float((gl_VertexID << 1) & 2), float(gl_VertexID & 2));
+                    vUv = vec2(p.x, 1.0 - p.y);
+                    gl_Position = vec4(p * 2.0 - 1.0, 0.0, 1.0);
+                }`;
+
+            const fragmentSrc = `#version 300 es
+                precision highp float;
+                in vec2 vUv;
+                out vec4 outColor;
+                uniform sampler2D uPhoto;
+                uniform vec3 uPalette[8];
+                uniform float uTime;
+                uniform vec2 uCursor;
+                uniform float uHover;
+                uniform float uPulse;      // seconds since the click, or -1 at rest
+                uniform vec2 uPulseOrigin; // click point, photo space (-0.5..0.5)
+
+                const float HALF_PI = 1.57079632679;
+                const float SQRT_TWO = 1.41421356237;
+                const float COLUMNS = 5.0;
+                const float ROWS = 5.0;
+                const float CONTOUR_STRENGTH = 0.76;
+                const float BASE_GLOW = 0.5;
+                const float SWEEP_SCALE = 0.5;
+                const float PHASE_DELAY = 0.3;
+                const float GLOW = 0.4;        // strength of the heat pattern screened over the photo
+                const float DIM = 0.88;        // photo brightness under the glow
+                const float SATURATION = 0.85;
+
+                float radialMask(vec2 p, vec2 c, vec2 r) { return 1.0 - smoothstep(r.x, r.y, length(p - c)); }
+                float linearRamp(float a, float b, float v) { return clamp((v - a) / (b - a), 0.0, 1.0); }
+                float smoothRamp(float a, float b, float v) { float t = linearRamp(a, b, v); return t * t * (3.0 - 2.0 * t); }
+                float positiveCubic(float v) { float p = max(v, 0.0); return p * p * p; }
+                float tripleBoxCdf(float v) {
+                    if (v <= 0.0) return 0.0;
+                    if (v >= 3.0) return 1.0;
+                    return clamp((positiveCubic(v) - 3.0 * positiveCubic(v - 1.0) + 3.0 * positiveCubic(v - 2.0) - positiveCubic(v - 3.0)) / 6.0, 0.0, 1.0);
+                }
+                float centeredSoftCdf(float v) { return tripleBoxCdf(v * 0.5 + 1.5); }
+                float axisCoverage(float v, float r) { return max(min(v + r, 1.0) - max(v - r, 0.0), 0.0) / (r * 2.0); }
+                float softAxisCoverage(float v, float r) { return clamp(centeredSoftCdf((1.0 - v) / r) - centeredSoftCdf(-v / r), 0.0, 1.0); }
+                float squareExterior(vec2 p, float r) { return 1.0 - axisCoverage(p.x, r) * axisCoverage(p.y, r); }
+                float softSquareExterior(vec2 p, float r) { return 1.0 - softAxisCoverage(p.x, r) * softAxisCoverage(p.y, r); }
+                float cellGlowField(vec2 p) {
+                    float r = 0.15, o = 0.008;
+                    float h = (softAxisCoverage(p.x - o, r) + 2.0 * softAxisCoverage(p.x, r) + softAxisCoverage(p.x + o, r)) / 4.0;
+                    float v = (softAxisCoverage(p.y - o, r) + 2.0 * softAxisCoverage(p.y, r) + softAxisCoverage(p.y + o, r)) / 4.0;
+                    return 1.0 - h * v;
+                }
+
+                float travelingOcclusion(vec2 position, float cyclePosition, float edgeGlow) {
+                    vec2 stretched = position;
+                    float sweepY = mix(-1.0, 2.0, cyclePosition);
+                    stretched.y -= 0.5;
+                    float verticalStretch = smoothRamp(0.0, 0.8, sweepY) * linearRamp(1.4, 0.9, sweepY);
+                    stretched *= vec2(1.0, 1.0 + 1.5 * verticalStretch);
+                    stretched.y += 0.5;
+                    float falloffRadius = 1.0 - 0.3 * (smoothRamp(0.1, 0.2, cyclePosition) * (1.0 - smoothRamp(0.2, 0.5, cyclePosition)));
+                    float occlusion = radialMask(stretched, vec2(0.5, sweepY - 0.2), vec2(0.4, falloffRadius));
+                    occlusion = pow(occlusion, 1.4) * 1.2;
+                    float sweepDistance = sweepY - position.y;
+                    float leadingFade = linearRamp(-0.4, 0.0, sweepDistance) * (1.0 - smoothRamp(0.0, 1.2, sweepDistance));
+                    leadingFade = pow(leadingFade, 3.0);
+                    occlusion = mix(leadingFade, occlusion, 1.0 - smoothRamp(0.0, 0.3, sweepDistance));
+                    float crestCutout = radialMask(position, vec2(0.5, 0.19), vec2(0.05, 0.25));
+                    crestCutout += 2.0 * edgeGlow * radialMask(position, vec2(0.5, 0.19), vec2(0.2, 0.5));
+                    float crestVisibility = 0.55 * smoothRamp(0.2, 0.3, cyclePosition) * (1.0 - smoothRamp(0.3, 0.45, cyclePosition));
+                    occlusion = mix(occlusion, 0.0, crestCutout * crestVisibility);
+                    occlusion /= max(0.0001, smoothRamp(1.0, 0.85, position.y));
+                    return clamp(occlusion, 0.0, 1.0);
+                }
+
+                vec3 samplePalette(float intensity) {
+                    float pos = clamp(intensity * 7.0, 0.0, 7.0);
+                    int segment = min(int(pos), 6);
+                    return mix(uPalette[segment], uPalette[segment + 1], pos - float(segment));
+                }
+
+                // The original gpuworld heat level for a point in a tile (cellUv 0..1)
+                float heatLevel(vec2 cellUv, vec2 cellIndex) {
+                    vec2 borderUv = (cellUv - 0.5) * 0.99 + 0.5;
+                    vec2 phaseVector = cellIndex + 0.5;
+                    float phaseRotation = HALF_PI - atan(phaseVector.y, phaseVector.x);
+                    float phaseOriginDistance = length(cellIndex) / length(vec2(COLUMNS - 1.0, ROWS - 1.0));
+
+                    vec2 cellCenter = (cellIndex + 0.5) / vec2(COLUMNS, ROWS) - 0.5;
+                    vec2 cursorVector = cellCenter - uCursor;
+                    float cursorRange = length(cursorVector);
+                    float cursorRotation = (HALF_PI - atan(cursorVector.y, cursorVector.x)) * smoothstep(0.0, 0.08, cursorRange);
+                    float sweepRotation = mix(phaseRotation, cursorRotation, uHover);
+                    float propagationDistance = mix(phaseOriginDistance, cursorRange / SQRT_TWO, uHover);
+                    float cursorGlow = mix(0.2, 0.6, smoothstep(0.0, 0.1, cursorRange));
+                    float glowStrength = mix(BASE_GLOW, cursorGlow, uHover);
+
+                    vec2 sweepUv = (cellUv - 0.5) * SWEEP_SCALE + 0.5;
+                    float c = cos(sweepRotation), s = sin(sweepRotation);
+                    vec2 rotatedSweepUv = mat2(c, s, -s, c) * (sweepUv - 0.5) + 0.5;
+
+                    float borderMask = squareExterior(borderUv, 0.005);
+                    float interiorGlow = cellGlowField(cellUv) * (1.0 - borderMask);
+                    float contourGlow = softSquareExterior(cellUv, 0.018) * (1.0 - borderMask);
+
+                    float cyclePosition = fract(uTime * 0.1 + 0.2 - propagationDistance * PHASE_DELAY);
+                    float occlusionA = travelingOcclusion(rotatedSweepUv, cyclePosition, interiorGlow);
+                    float occlusionB = travelingOcclusion(rotatedSweepUv, fract(cyclePosition + 1.0 / 3.0), interiorGlow);
+                    float occlusionC = travelingOcclusion(rotatedSweepUv, fract(cyclePosition + 2.0 / 3.0), interiorGlow);
+
+                    float intensity = (0.8 + 0.8 * interiorGlow) * 2.0 * glowStrength;
+                    intensity = mix(intensity, 0.0, occlusionA);
+                    intensity = mix(intensity, 0.0, occlusionB);
+                    intensity = mix(intensity, 0.0, occlusionC);
+                    intensity += contourGlow * 2.0 * CONTOUR_STRENGTH;
+                    intensity = min(1.0, intensity) * (1.0 - borderMask);
+                    return clamp(pow(intensity, 1.2), 0.0, 1.0);
+                }
+
+                // Click ripple: a thin ring of heat expanding from the click (in tile
+                // units), strongest along tile edges so it reads as running through the grid
+                float rippleRing(vec2 gridPosition, vec2 cellUv) {
+                    if (uPulse < 0.0) return 0.0;
+                    float d = length(gridPosition - (uPulseOrigin + 0.5) * vec2(COLUMNS, ROWS));
+                    float radius = uPulse * 6.0;
+                    float width = 0.28 + uPulse * 0.25;
+                    float fade = pow(1.0 - smoothstep(0.0, 1.3, uPulse), 1.5);
+                    float edges = mix(0.3, 1.0, softSquareExterior(cellUv, 0.06));
+                    return exp(-pow((d - radius) / width, 2.0)) * fade * edges;
+                }
+
+                void main() {
+                    // vUv runs top-left (0,0) to bottom-right (1,1), like the original
+                    vec2 grid = vec2(COLUMNS, ROWS);
+                    vec2 gridPosition = vUv * grid;
+                    vec2 cellIndex = min(floor(gridPosition), grid - 1.0);
+                    vec2 cellUv = gridPosition - cellIndex;
+                    float ring = rippleRing(gridPosition, cellUv);
+
+                    // Softly graded photo with the heat pattern screened on top
+                    vec3 photo = texture(uPhoto, vUv).rgb;
+                    float lum = dot(photo, vec3(0.299, 0.587, 0.114));
+                    vec3 base = mix(vec3(lum), photo, SATURATION) * DIM;
+                    float heat = clamp(heatLevel(cellUv, cellIndex) + ring * 0.5, 0.0, 1.0);
+                    vec3 glow = samplePalette(heat) * (GLOW + ring * 0.3);
+                    outColor = vec4(1.0 - (1.0 - base) * (1.0 - glow), 1.0);
+                }`;
+
+            function compile(type, src) {
+                const shader = gl.createShader(type);
+                gl.shaderSource(shader, src);
+                gl.compileShader(shader);
+                if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                    console.warn('Profile shader:', gl.getShaderInfoLog(shader));
+                    return null;
+                }
+                return shader;
             }
-        });
+            const vs = compile(gl.VERTEX_SHADER, vertexSrc);
+            const fs = compile(gl.FRAGMENT_SHADER, fragmentSrc);
+            if (!vs || !fs) return;
+            const program = gl.createProgram();
+            gl.attachShader(program, vs);
+            gl.attachShader(program, fs);
+            gl.linkProgram(program);
+            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+            gl.useProgram(program);
+            gl.bindVertexArray(gl.createVertexArray());
+
+            const u = name => gl.getUniformLocation(program, name);
+            const uTime = u('uTime'), uCursor = u('uCursor'), uHover = u('uHover');
+            const uPulse = u('uPulse'), uPulseOrigin = u('uPulseOrigin');
+            gl.uniform3fv(u('uPalette'), paletteData);
+            gl.uniform1i(u('uPhoto'), 0);
+
+            function resize() {
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                const w = Math.round(canvas.clientWidth * dpr), h = Math.round(canvas.clientHeight * dpr);
+                if (canvas.width !== w || canvas.height !== h) {
+                    canvas.width = w;
+                    canvas.height = h;
+                    gl.viewport(0, 0, w, h);
+                }
+            }
+
+            // Pointer position in photo space (-0.5..0.5)
+            function photoPoint(e) {
+                const r = profilePhoto.getBoundingClientRect();
+                return { x: (e.clientX - r.left) / r.width - 0.5, y: (e.clientY - r.top) / r.height - 0.5 };
+            }
+
+            // Cursor eased like the original's damping
+            const cursor = { x: 0, y: 0, tx: 0, ty: 0 };
+            let hover = 0, hoverTarget = 0;
+            profilePhoto.addEventListener('pointermove', (e) => {
+                const pt = photoPoint(e);
+                cursor.tx = pt.x;
+                cursor.ty = pt.y;
+                hoverTarget = 1;
+            });
+            profilePhoto.addEventListener('pointerleave', () => { hoverTarget = 0; });
+
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            let start = null, visible = false, rafId = null;
+
+            const PULSE_DURATION = 1.3;
+            let pulseStart = null, pulseOrigin = { x: 0, y: 0 };
+            function pulse(pt) {
+                if (reducedMotion) return;
+                pulseOrigin = pt;
+                pulseStart = performance.now();
+            }
+            profilePhoto.addEventListener('click', (e) => pulse(photoPoint(e)));
+            profilePhoto.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    pulse({ x: 0, y: 0 });
+                }
+            });
+
+            function frame(now) {
+                rafId = null;
+                if (start === null) start = now;
+                resize();
+                cursor.x += (cursor.tx - cursor.x) * 0.05;
+                cursor.y += (cursor.ty - cursor.y) * 0.05;
+                hover += (hoverTarget - hover) * 0.05;
+
+                let pulseTime = pulseStart === null ? -1 : (now - pulseStart) / 1000;
+                if (pulseTime > PULSE_DURATION) {
+                    pulseStart = null;
+                    pulseTime = -1;
+                }
+
+                gl.uniform1f(uTime, reducedMotion ? 4 : (now - start) / 1000);
+                gl.uniform2f(uCursor, cursor.x, cursor.y);
+                gl.uniform1f(uHover, hover);
+                gl.uniform1f(uPulse, pulseTime);
+                gl.uniform2f(uPulseOrigin, pulseOrigin.x, pulseOrigin.y);
+                gl.drawArrays(gl.TRIANGLES, 0, 3);
+                canvas.classList.add('ready');
+                if (visible && !reducedMotion) rafId = requestAnimationFrame(frame);
+            }
+
+            function upload() {
+                const texture = gl.createTexture();
+                gl.bindTexture(gl.TEXTURE_2D, texture);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                try {
+                    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+                } catch (err) {
+                    return; // e.g. tainted image under file://; keep the plain photo
+                }
+                // Only animate while the photo is on screen (hidden tabs report not intersecting)
+                new IntersectionObserver(([entry]) => {
+                    visible = entry.isIntersecting;
+                    if (visible && rafId === null) rafId = requestAnimationFrame(frame);
+                }).observe(canvas);
+            }
+            if (img.complete && img.naturalWidth) upload();
+            else img.addEventListener('load', upload, { once: true });
+        })();
 
         // Preload publications in the background so the tab opens instantly
         function preloadPublications() {
