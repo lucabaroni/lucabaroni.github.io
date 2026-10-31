@@ -38,7 +38,8 @@
       "alumniOf": "Charles University",
       "sameAs": [
         "https://github.com/lucabaroni",
-        "https://www.linkedin.com/in/luca-baroni-261161157"
+        "https://www.linkedin.com/in/luca-baroni-261161157",
+        "https://x.com/luchinobaroni"
       ]
     }
     </script>
@@ -111,15 +112,15 @@
             z-index: -1;
         }
 
-        /* Two columns: the content card on the left and a sticky section nav
-           on the right (it becomes a bar across the top on narrow screens) */
+        /* Two columns: the content card against the left edge and a sticky
+           section nav against the right edge (a bar across the top on
+           narrow screens) */
         .page {
             display: grid;
-            grid-template-columns: minmax(0, 720px) 170px;
+            grid-template-columns: minmax(0, 960px) minmax(max-content, 1fr);
             column-gap: 3rem;
-            justify-content: center;
             align-items: start;
-            padding: 2.5rem 1.5rem 4rem;
+            padding: 2.5rem 3rem 4rem;
         }
 
         .container {
@@ -165,12 +166,13 @@
         .side-nav {
             grid-column: 2;
             grid-row: 1;
+            justify-self: end;
             position: sticky;
             top: 3rem;
             z-index: 2;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: flex-end;
             gap: 0.6rem;
             padding-top: 2.6rem;
         }
@@ -183,8 +185,9 @@
             line-height: 1.3;
             text-transform: lowercase;
             font-family: 'Raleway', sans-serif;
-            padding-left: 0.9rem;
-            border-left: 2px solid transparent;
+            white-space: nowrap;
+            padding-right: 0.9rem;
+            border-right: 2px solid transparent;
             transition: color 0.3s ease, border-color 0.3s ease;
         }
 
@@ -194,7 +197,7 @@
 
         .side-nav a.active {
             color: var(--text-primary);
-            border-left-color: var(--accent-color);
+            border-right-color: var(--accent-color);
         }
 
         a:focus-visible, button:focus-visible {
@@ -217,7 +220,7 @@
         }
 
         .side-nav #theme-toggle {
-            margin: 1rem 0 0 0.9rem;
+            margin: 1rem calc(0.9rem + 2px) 0 0;
             padding: 0;
         }
 
@@ -381,9 +384,12 @@
             opacity: 1;
         }
 
+        /* The intro text wraps under the photo when the card is too narrow
+           to fit both side by side */
         .profile-section {
             display: flex;
-            gap: 2rem;
+            flex-wrap: wrap;
+            gap: 2rem 2.5rem;
             align-items: center;
         }
 
@@ -391,8 +397,8 @@
            the card's rounded corners */
         .profile-image {
             flex-shrink: 0;
-            width: 280px;
-            height: 280px;
+            width: 420px;
+            height: 420px;
             position: relative;
             cursor: pointer;
             border-radius: 9%;
@@ -404,6 +410,12 @@
             height: 100%;
             object-fit: cover;
             display: block;
+        }
+
+        /* data-tone="grey" on the photo renders it and the effect in greyscale;
+           the plain image matches so the fade-in doesn't flash colour */
+        .profile-image[data-tone="grey"] img {
+            filter: grayscale(1);
         }
 
         /* WebGL heat-map tiles drawn over the photo; hidden until the first
@@ -444,7 +456,7 @@
         }
 
         .profile-content {
-            flex: 1;
+            flex: 1 1 260px;
             font-family: 'Inter', sans-serif;
             font-size: 1rem;
         }
@@ -556,6 +568,7 @@
         @media (max-width: 900px) {
             .page {
                 grid-template-columns: minmax(0, 1fr);
+                column-gap: 0;
                 padding: 0 0.75rem 2rem;
             }
             .container {
@@ -566,6 +579,7 @@
             .side-nav {
                 grid-column: 1;
                 grid-row: 1;
+                justify-self: stretch;
                 top: 0;
                 flex-direction: row;
                 align-items: center;
@@ -579,7 +593,7 @@
             }
             .side-nav a {
                 padding: 0 0 0.15rem;
-                border-left: 0;
+                border-right: 0;
                 border-bottom: 2px solid transparent;
                 font-size: 1.1rem;
             }
@@ -615,8 +629,9 @@
                 gap: 1.2rem;
             }
             .profile-image {
-                width: 200px;
-                height: 200px;
+                width: min(100%, 340px);
+                height: auto;
+                aspect-ratio: 1;
             }
             .profile-content p {
                 text-align: center;
@@ -702,7 +717,7 @@
                 <section id="about" class="section">
                     <h1>Luca Baroni</h1>
                     <div class="profile-section">
-                        <div class="profile-image" id="profile-photo" role="button" tabindex="0" aria-label="Photo of Luca Baroni">
+                        <div class="profile-image" id="profile-photo" data-tone="color" role="button" tabindex="0" aria-label="Photo of Luca Baroni">
                             <img src="profile.jpg" alt="Luca Baroni" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <div class="profile-placeholder" style="display:none;">LB</div>
                             <canvas class="profile-canvas" id="profile-canvas" aria-hidden="true"></canvas>
@@ -727,6 +742,10 @@
                                 <a class="contact-pill" href="https://www.linkedin.com/in/luca-baroni-261161157" target="_blank" rel="noopener">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                                     LinkedIn
+                                </a>
+                                <a class="contact-pill" href="https://x.com/luchinobaroni" target="_blank" rel="noopener">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 3a10.9 10.9 0 0 1-3.1 1.5 4.5 4.5 0 0 0-7.9 3v1A10.7 10.7 0 0 1 3 4s-4 9 5 13a11.6 11.6 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.1-.8A7.7 7.7 0 0 0 23 3z"></path></svg>
+                                    Twitter
                                 </a>
                             </div>
                             <!-- <p>Some time ago, I was studying theoretical physics.</p> -->
@@ -954,6 +973,7 @@
                 uniform vec2 uCursor;
                 uniform float uHover;
                 uniform float uPulse;      // seconds since the click, or -1 at rest
+                uniform float uGrey;       // 1 renders photo and glow in greyscale
                 uniform vec2 uPulseOrigin; // click point, photo space (-0.5..0.5)
 
                 const float HALF_PI = 1.57079632679;
@@ -964,8 +984,8 @@
                 const float BASE_GLOW = 0.5;
                 const float SWEEP_SCALE = 0.5;
                 const float PHASE_DELAY = 0.3;
-                const float GLOW = 0.4;        // strength of the heat pattern screened over the photo
-                const float DIM = 0.88;        // photo brightness under the glow
+                const float GLOW = 0.22;       // strength of the heat pattern screened over the photo
+                const float DIM = 0.95;        // photo brightness under the glow
                 const float SATURATION = 0.85;
 
                 float radialMask(vec2 p, vec2 c, vec2 r) { return 1.0 - smoothstep(r.x, r.y, length(p - c)); }
@@ -1078,9 +1098,11 @@
                     // Softly graded photo with the heat pattern screened on top
                     vec3 photo = texture(uPhoto, vUv).rgb;
                     float lum = dot(photo, vec3(0.299, 0.587, 0.114));
-                    vec3 base = mix(vec3(lum), photo, SATURATION) * DIM;
+                    vec3 base = mix(vec3(lum), photo, SATURATION * (1.0 - uGrey)) * DIM;
                     float heat = clamp(heatLevel(cellUv, cellIndex) + ring * 0.5, 0.0, 1.0);
-                    vec3 glow = samplePalette(heat) * (GLOW + ring * 0.3);
+                    vec3 glow = samplePalette(heat);
+                    glow = mix(glow, vec3(dot(glow, vec3(0.299, 0.587, 0.114))), uGrey);
+                    glow *= GLOW + ring * 0.25;
                     outColor = vec4(1.0 - (1.0 - base) * (1.0 - glow), 1.0);
                 }`;
 
@@ -1110,6 +1132,7 @@
             const uPulse = u('uPulse'), uPulseOrigin = u('uPulseOrigin');
             gl.uniform3fv(u('uPalette'), paletteData);
             gl.uniform1i(u('uPhoto'), 0);
+            gl.uniform1f(u('uGrey'), profilePhoto.dataset.tone === 'grey' ? 1 : 0);
 
             function resize() {
                 const dpr = Math.min(window.devicePixelRatio || 1, 2);
