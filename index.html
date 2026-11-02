@@ -946,8 +946,9 @@
         // grid shader, ported from WebGPU to WebGL2). The photo is cut into a
         // 5x5 grid and the original heat pattern is screened softly over it:
         // dark waves sweep each tile with a delay that propagates from the
-        // top-left corner, or from the cursor on hover. Clicking sends a thin
-        // ripple of heat through the grid from the click point.
+        // top-left corner, or from the cursor on hover. The heat only shows in
+        // occasional bursts (and while hovering), so the photo is mostly plain.
+        // Clicking sends a thin ripple of heat through the grid from the click point.
         (function initProfileHeat() {
             const canvas = document.getElementById('profile-canvas');
             const img = profilePhoto.querySelector('img');
@@ -993,6 +994,7 @@
                 const float GLOW = 0.22;       // strength of the heat pattern screened over the photo
                 const float DIM = 0.95;        // photo brightness under the glow
                 const float SATURATION = 0.85;
+                const float BURST_PERIOD = 15.0; // seconds from one burst of heat to the next
 
                 float radialMask(vec2 p, vec2 c, vec2 r) { return 1.0 - smoothstep(r.x, r.y, length(p - c)); }
                 float linearRamp(float a, float b, float v) { return clamp((v - a) / (b - a), 0.0, 1.0); }
@@ -1108,7 +1110,12 @@
                     float heat = clamp(heatLevel(cellUv, cellIndex) + ring * 0.5, 0.0, 1.0);
                     vec3 glow = samplePalette(heat);
                     glow = mix(glow, vec3(dot(glow, vec3(0.299, 0.587, 0.114))), uGrey);
-                    glow *= GLOW + ring * 0.25;
+
+                    // Seconds since this tile's burst began: each burst rolls out
+                    // from the top-left tile, holds for a few seconds and fades
+                    float burstTime = fract((uTime - 0.8) / BURST_PERIOD - length(cellIndex) / length(grid - 1.0) * 0.1) * BURST_PERIOD;
+                    float burst = smoothstep(0.0, 1.5, burstTime) * (1.0 - smoothstep(3.5, 6.0, burstTime));
+                    glow *= GLOW * max(burst, uHover) + ring * 0.25;
                     outColor = vec4(1.0 - (1.0 - base) * (1.0 - glow), 1.0);
                 }`;
 
